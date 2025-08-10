@@ -99,6 +99,11 @@ jobs:
         working-directory: src
         shell: bash
         if: runner.os == 'Linux'
+        
+      - name: Strip binaries (Linux)
+        if: runner.os == 'Linux'
+        run: |
+        find game/grub_fortress/bin -type f -executable -exec strip --strip-all {} +
 
       - name: Build (Windows only)
         if: runner.os == 'Windows'
