@@ -110,13 +110,6 @@ DESCRIPTION INFO_OPTIONS
 	}
 	"credit3_8"
 	{
-		"FlaminSarge - Class Team color changes in the loadout menu"
-		"github.com/ValveSoftware/source-sdk-2013/pull/1305"
-		{ BOOL }
-		{ "1" }
-	}
-	"credit3_9"
-	{
 		"NvC-DmN-CH - HL2 Mirrored code"
 		"github.com/NvC-DmN-CH/Half-Life-2-Mirrored"
 		{ BOOL }

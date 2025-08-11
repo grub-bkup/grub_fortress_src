@@ -567,11 +567,6 @@ void Open_CharInfoDirect( const CCommand &args )
 	if ( args.ArgC() > 1 )
 	{
 		iClass = -atoi( args.Arg( 1 ) );
-		if (-iClass < TF_CLASS_UNDEFINED || -iClass >= TF_CLASS_COUNT)
-		{
-			// prevent Assert-crashing if the client does something silly
-			iClass = -TF_CLASS_UNDEFINED;
-		}
 	}
 
 	EconUI()->OpenEconUI( iClass );	
