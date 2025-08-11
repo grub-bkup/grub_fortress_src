@@ -530,14 +530,7 @@ DESCRIPTION INFO_OPTIONS
 		{ BOOL }
 		{ "0" }
 	}
-
-	"tf_use_match_hud"
-	{
-		"#TF_UseMatchHUD"
-		{ BOOL }
-		{ "1" }
-	}
-
+	
 	"bf_clean_spectator_hud"
 	{
 		"#BF_CleanSpectatorHUD"
