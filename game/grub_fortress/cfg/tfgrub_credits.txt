@@ -115,4 +115,11 @@ DESCRIPTION INFO_OPTIONS
 		{ BOOL }
 		{ "1" }
 	}
+	"credit3_9"
+	{
+		"wgetJane - Fix sniper laser dot position being calculated inaccurately"
+		"github.com/ValveSoftware/source-sdk-2013/pull/637"
+		{ BOOL }
+		{ "1" }
+	}
 }
