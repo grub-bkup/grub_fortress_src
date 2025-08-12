@@ -2424,7 +2424,7 @@
 	{
 		"ControlName"	"CExImageButton"
 		"fieldName"		"SettingsButton"
-		"xpos"			"c-208+273"
+		"xpos"			"c-133+273"
 		"ypos"			"437"
 		"zpos"			"1"
 		"wide"			"30"
@@ -2472,7 +2472,7 @@
 	{
 		"ControlName"	"CExImageButton"
 		"fieldName"		"TF2SettingsButton"
-		"xpos"			"c-183+273"
+		"xpos"			"c-108+273"
 		"ypos"			"437"
 		"zpos"			"2"
 		"wide"			"26"
@@ -2520,7 +2520,7 @@
 	{
 		"ControlName"	"CExImageButton"
 		"fieldName"		"AchievementsButton"
-		"xpos"			"c-158+273"
+		"xpos"			"c-83+273"
 		"ypos"			"437"
 		"zpos"			"3"
 		"wide"			"30"
@@ -2552,7 +2552,7 @@
 			"ControlName"	"ImagePanel"
 			"fieldName"		"SubImage"
 			"xpos"			"5"
-			"ypos"			"6"
+			"ypos"			"5"
 			"zpos"			"1"
 			"wide"			"15"
 			"tall"			"15"
@@ -2567,7 +2567,7 @@
 	{
 		"ControlName"	"CExImageButton"
 		"fieldName"		"CoachPlayersButton"
-		"xpos"			"c-123+273"
+		"xpos"			"c-58+273"
 		"ypos"			"437"
 		"zpos"			"5"
 		"wide"			"25"
@@ -2614,10 +2614,10 @@
 	{
 		"ControlName"	"CExImageButton"
 		"fieldName"		"WorkshopButton"
-		"xpos"			"c-93+273"
+		"xpos"			"c-34+273"
 		"ypos"			"437"
 		"zpos"			"4"
-		"wide"			"30"
+		"wide"			"25"
 		"tall"			"25"
 		"autoResize"	"0"
 		"pinCorner"		"3"
@@ -2645,8 +2645,8 @@
 		{
 			"ControlName"	"ImagePanel"
 			"fieldName"		"SubImage"
-			"xpos"			"9"
-			"ypos"			"6"
+			"xpos"			"5"
+			"ypos"			"5"
 			"zpos"			"1"
 			"wide"			"15"
 			"tall"			"15"
@@ -2657,14 +2657,16 @@
 		}				
 	}	
 
+
+	
 	"ReplayButton"
 	{
 		"ControlName"	"CExImageButton"
 		"fieldName"		"ReplayButton"
-		"xpos"			"c-64+273"
+		"xpos"			"c-14+273"
 		"ypos"			"437"
-		"zpos"			"5"
-		"wide"			"25"
+		"zpos"			"3"
+		"wide"			"30"
 		"tall"			"25"
 		"autoResize"	"0"
 		"pinCorner"		"3"
@@ -2680,19 +2682,18 @@
 		"Command"		"engine replay_reloadbrowser"
 
 		"navUp"			"VRModeButton"
-		"navLeft"		"AchievementsButton"
-		"navRight"		"CoachPlayersButton"
+		"navLeft"		"CoachPlayersButton"
+		"navRight"		"SettingsButton"
 
 		"sound_depressed"	"UI/buttonclick.wav"
 		"sound_released"	"UI/buttonclickrelease.wav"
-		"border_default"	"MainMenuSubButtonBorder"
-		
+
 		"image_drawcolor"	"235 226 202 255"
 		"SubImage"
 		{
 			"ControlName"	"ImagePanel"
 			"fieldName"		"SubImage"
-			"xpos"			"5"
+			"xpos"			"10"
 			"ypos"			"5"
 			"zpos"			"1"
 			"wide"			"15"
@@ -2701,9 +2702,9 @@
 			"enabled"		"1"
 			"image"			"glyph_tv"
 			"scaleImage"	"1"
-		}				
-	}					
-	
+		}
+	}
+
 	"BackToReplaysButton"
 	{
 		"ControlName"	"CExImageButton"
@@ -2729,7 +2730,7 @@
 		"Command"		"exitreplayeditor"
 		"sound_depressed"	"UI/buttonclick.wav"
 		"sound_released"	"UI/buttonclickrelease.wav"
-		
+
 		"image_drawcolor"	"235 226 202 255"
 		"SubImage"
 		{
@@ -2744,7 +2745,7 @@
 			"enabled"		"1"
 			"scaleImage"	"1"
 			"image"			"glyph_quit"
-		}				
+		}
 	}			
 
 	"icon_generator"
@@ -2784,10 +2785,10 @@
 	{
 		"ControlName"	"CExImageButton"
 		"fieldName"		"ModCreditsButton"
-		"xpos"			"c-400"
+		"xpos"			"c-183"
 		"ypos"			"rs1-18"
-		"wide"			"110"
-		"tall"			"25"
+		"wide"			"100"
+		"tall"			"26"
 		"autoResize"	"0"
 		"pinCorner"		"3"
 		"visible"		"1"
