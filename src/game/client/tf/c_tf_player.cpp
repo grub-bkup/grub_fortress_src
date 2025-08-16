@@ -780,7 +780,7 @@ void C_TFRagdoll::CreateTFRagdoll()
 	}
 
 	// Check for any special player skin override behaviour.
-	if ( pPlayer && pPlayer->BRenderAsZombie() )
+	if ( pPlayer && ( pPlayer->BRenderAsZombie() || pPlayer->HasZombieCosmetics() ) )
 	{
 		C_TFPlayer::AdjustSkinIndexForZombie( m_iClass, m_nSkin );
 	}
@@ -1305,8 +1305,7 @@ void C_TFRagdoll::OnDataChanged( DataUpdateType_t type )
 					EmitSound( "TFPlayer.Decapitated" );
 
 					bool bBlood = true;
-					if ( TFGameRules() && ( TFGameRules()->UseSillyGibs() || 
-											( TFGameRules()->IsMannVsMachineMode() && pPlayer && pPlayer->GetTeamNumber() == TF_TEAM_PVE_INVADERS ) ) )
+					if ( TFGameRules() && ( TFGameRules()->UseSillyGibs() || ( TFGameRules()->IsMannVsMachineMode() && pPlayer && pPlayer->GetTeamNumber() == TF_TEAM_PVE_INVADERS ) ) || pPlayer->IsRobot() )
 					{
 						bBlood = false;
 					}
@@ -6183,7 +6182,14 @@ void C_TFPlayer::MVM_StartIdleSound(void)
 		}
 		case TF_CLASS_DEMOMAN:
 		{
-			pszSoundName = "MVM.GiantDemomanLoop";
+			if ( m_Shared.InCond( TF_COND_SENTRY_BUSTER ) )
+			{
+				pszSoundName = "MVM.SentryBusterLoop";
+			}
+			else
+			{
+				pszSoundName = "MVM.GiantDemomanLoop";
+			}
 			break;
 		}
 		case TF_CLASS_SCOUT:
@@ -7844,6 +7850,34 @@ bool C_TFPlayer::BRenderAsZombie( bool bWeaponsCheck /*= false */  )
 }
 
 //-----------------------------------------------------------------------------
+// Purpose: Check if zombie costume is equipped without Halloween vision requirement
+//-----------------------------------------------------------------------------
+bool C_TFPlayer::HasZombieCosmetics( bool bWeaponsCheck /*= false */  )
+{
+	// Should we render as somebody else?
+	bool bRenderDisguised = false;
+	if ( m_Shared.InCond( TF_COND_DISGUISED ) )
+	{
+		// When disguised, our teammates will see us with a mask.
+		// For now, don't show us as a zombie in that state, because the zombie parts
+		// (like every other cosmetic) disappear.
+		if ( !IsEnemyPlayer() )
+			return false;
+
+		// Ditto when we are disguised as an enemy spy.  We always use the mask
+		// in that case and hide cosmetics
+		if ( m_Shared.GetDisguiseClass() == TF_CLASS_SPY )
+			return false;
+
+		bRenderDisguised = true;
+	}
+
+	int iPlayerSkinOverride = bRenderDisguised ? m_Shared.GetDisguisedSkinOverride() : GetSkinOverride();
+
+	return iPlayerSkinOverride == 1;
+}
+
+//-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
 int C_TFPlayer::GetSkin()
@@ -7898,7 +7932,7 @@ int C_TFPlayer::GetSkin()
 	}
 
 	// Check for any special player skin override behaviour.
-	if ( BRenderAsZombie() )
+	if ( BRenderAsZombie() || HasZombieCosmetics() )
 	{
 		int iClass = GetPlayerClass()->GetClassIndex();
 		if ( m_Shared.InCond( TF_COND_DISGUISED ) )

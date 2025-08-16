@@ -89,6 +89,7 @@
 #include "tier0/icommandline.h"
 #include "entity_healthkit.h"
 #include "choreoevent.h"
+#include "sceneentity.h"
 #include "minigames/tf_duel.h"
 #include "tf_bot_temp.h"
 #include "tf_objective_resource.h"
@@ -262,6 +263,7 @@ extern ConVar tf_mvm_bot_flag_carrier_interval_to_3rd_upgrade;
 extern ConVar tf_mvm_bot_flag_carrier_health_regen;
 extern ConVar bf_mvmvs_playstyle;
 extern ConVar bf_mvmvs_restrict_slots;
+extern ConVar bf_mvmvs_enable_human_busters;
 
 #define TF_CANNONBALL_FORCE_SCALE	80.f
 #define TF_CANNONBALL_FORCE_UPWARD	300.f
@@ -2169,6 +2171,19 @@ void CTFPlayer::TFPlayerThink()
 #endif
 */
 
+	// Check for Sentry Buster stomp on buildings
+	if ( m_Shared.InCond( TF_COND_SENTRY_BUSTER ) )
+	{
+		SentryBusterStompCheck();
+		
+		// Check for delayed taunt detonation
+		if ( m_flNextSentryBusterDetonateTime > 0 && gpGlobals->curtime >= m_flNextSentryBusterDetonateTime )
+		{
+			m_flNextSentryBusterDetonateTime = 0; // Clear the timer
+			SentryBusterDetonate();
+		}
+	}
+
 	SetContextThink( &CTFPlayer::TFPlayerThink, gpGlobals->curtime, "TFPlayerThink" );
 	//MVM Versus - Spawn Protection 
 	// TODO: why does this function get called effectively twice? (one here and in MvMDeployBombThink) - main_thing
@@ -2493,6 +2508,230 @@ void CTFPlayer::MvMDeployBombEnd()
 
 	SetDeployingBombState( TF_BOMB_DEPLOYING_NONE );
 }
+
+//-----------------------------------------------------------------------------
+// Purpose: Convert this player into a Sentry Buster
+//-----------------------------------------------------------------------------
+void CTFPlayer::BecomeHumanSentryBuster( CObjectSentrygun *pTargetSentry )
+{
+	if ( !TFGameRules() || !TFGameRules()->IsMannVsMachineMode() )
+		return;
+
+	if ( GetTeamNumber() != TF_TEAM_PVE_INVADERS )
+		return;
+
+	// Set the Sentry Buster condition
+	m_Shared.AddCond( TF_COND_SENTRY_BUSTER, -1.0f ); // Permanent until death
+
+	//Give our friend his tick tock sound
+	SetIsMiniBoss(true);
+	MVM_StartIdleSound();
+
+	// Force the player to be a Demoman (Sentry Busters are Demomans)
+	if ( GetPlayerClass()->GetClassIndex() != TF_CLASS_DEMOMAN )
+	{
+		GetPlayerClass()->Init( TF_CLASS_DEMOMAN );
+		Regenerate( false ); // Don't refill health/ammo, just update class
+	}
+
+	// Apply the Sentry Buster model
+	GetPlayerClass()->SetCustomModel( g_szBotBossSentryBusterModel, USE_CLASS_ANIMATIONS );
+
+	// Make the Sentry Buster giant-sized
+	SetModelScale( tf_mvm_miniboss_scale.GetFloat(), 0 );
+
+	// Remove primary and secondary weapons, keep only melee
+	for ( int iWeapon = 0; iWeapon < MAX_WEAPONS; ++iWeapon )
+	{
+		CTFWeaponBase *pWeapon = dynamic_cast<CTFWeaponBase*>( GetWeapon( iWeapon ) );
+		if ( pWeapon )
+		{
+			// Remove if not melee weapon
+			if ( pWeapon->GetWeaponID() != TF_WEAPON_BOTTLE && 
+				 pWeapon->GetWeaponID() != TF_WEAPON_STICKBOMB &&
+				 !pWeapon->IsMeleeWeapon() )
+			{
+				Weapon_Detach( pWeapon );
+				UTIL_Remove( pWeapon );
+			}
+		}
+	}
+
+	// Give the Sentry Buster a Ullapool Caber if they don't have one
+	CTFWeaponBase *pCaber = Weapon_OwnsThisID( TF_WEAPON_STICKBOMB );
+	if ( !pCaber )
+	{
+		pCaber = dynamic_cast<CTFWeaponBase*>( GiveNamedItem( "The Ullapool Caber", 0, NULL, true ) );
+	}
+	
+	if ( pCaber )
+	{
+		Weapon_Switch( pCaber );
+	}
+
+	// Set Sentry Buster health to 2500
+	SetHealth( 2500 );
+	SetMaxHealth( 2500 );
+
+	//Original Attributes from the popfile
+	AddCustomAttribute("override footstep sound set",7,-1);
+	AddCustomAttribute("move speed bonus", 2, -1);
+	AddCustomAttribute("damage force reduction", 0.5, -1);
+	AddCustomAttribute("airblast vulnerability multiplier", 0.5, -1);
+	AddCustomAttribute("cannot be backstabbed", 1, -1);
+
+	// Store target sentry for AI purposes (if needed)
+	// Could be used for objectives or HUD indicators
+	
+	// Play Sentry Buster sounds
+	EmitSound( "MVM.SentryBusterIntro" );
+	
+	// Notify team
+	if ( TFGameRules() )
+	{
+		TFGameRules()->HaveAllPlayersSpeakConceptIfAllowed( MP_CONCEPT_MVM_SENTRY_BUSTER, TF_TEAM_PVE_DEFENDERS );
+	}
+
+	// Reset accumulation so they don't immediately become another Sentry Buster
+	if ( pTargetSentry && pTargetSentry->GetOwner() )
+	{
+		CTFPlayer *pSentryOwner = pTargetSentry->GetOwner();
+		pSentryOwner->ResetAccumulatedSentryGunDamageDealt();
+		pSentryOwner->ResetAccumulatedSentryGunKillCount();
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Handle Sentry Buster taunt detonation
+//-----------------------------------------------------------------------------
+void CTFPlayer::SentryBusterDetonate()
+{
+	if ( !m_Shared.InCond( TF_COND_SENTRY_BUSTER ) )
+		return;
+
+	// Create explosion
+	Vector vecOrigin = GetAbsOrigin();
+	
+	// Use the same explosion as the bot Sentry Buster
+	CTakeDamageInfo info;
+	info.SetDamage( 2500.0f ); // High damage to destroy sentries
+	info.SetDamageType( DMG_BLAST );
+	info.SetInflictor( this );
+	info.SetAttacker( this );
+	info.SetDamagePosition( vecOrigin );
+	info.SetDamageForce( vec3_origin );
+
+	// Explosion sound
+	EmitSound( "MVM.SentryBusterExplode" );
+
+	// Find and damage nearby entities, especially buildings
+	CUtlVector<CBaseEntity*> entitiesInRange;
+	float flRadius = 300.0f; // Same radius as bot Sentry Buster
+	
+	for ( int i = 0; i < IBaseObjectAutoList::AutoList().Count(); ++i )
+	{
+		CBaseObject* pObj = static_cast<CBaseObject*>( IBaseObjectAutoList::AutoList()[i] );
+		if ( !pObj || pObj->GetTeamNumber() == GetTeamNumber() )
+			continue;
+
+		float flDist = (pObj->GetAbsOrigin() - vecOrigin).Length();
+		if ( flDist <= flRadius )
+		{
+			// Calculate damage falloff
+			float flDamageFalloff = RemapValClamped( flDist, 0.0f, flRadius, 1.0f, 0.1f );
+			CTakeDamageInfo buildingInfo = info;
+			buildingInfo.SetDamage( info.GetDamage() * flDamageFalloff );
+			
+			pObj->TakeDamage( buildingInfo );
+		}
+	}
+
+	// Damage players in range too
+	CUtlVector<CTFPlayer*> playerVector;
+	CollectPlayers( &playerVector, TEAM_ANY, COLLECT_ONLY_LIVING_PLAYERS );
+	
+	FOR_EACH_VEC( playerVector, i )
+	{
+		CTFPlayer *pPlayer = playerVector[i];
+		if ( !pPlayer || pPlayer == this || pPlayer->GetTeamNumber() == GetTeamNumber() )
+			continue;
+
+		float flDist = (pPlayer->GetAbsOrigin() - vecOrigin).Length();
+		if ( flDist <= flRadius )
+		{
+			float flDamageFalloff = RemapValClamped( flDist, 0.0f, flRadius, 1.0f, 0.1f );
+			CTakeDamageInfo playerInfo = info;
+			playerInfo.SetDamage( info.GetDamage() * flDamageFalloff * 0.4f ); // Reduced damage to players
+			
+			pPlayer->TakeDamage( playerInfo );
+		}
+	}
+
+	// Kill the Sentry Buster
+	TakeDamage( CTakeDamageInfo( this, this, 9999.0f, DMG_GENERIC ) );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Check if we can stomp on buildings
+//-----------------------------------------------------------------------------
+void CTFPlayer::SentryBusterStompCheck()
+{
+	if ( !m_Shared.InCond( TF_COND_SENTRY_BUSTER ) )
+		return;
+
+	// More forgiving detection - check around the player in a larger area
+	Vector vecOrigin = GetAbsOrigin();
+	Vector vecMins = vecOrigin + Vector( -48, -48, -32 );
+	Vector vecMaxs = vecOrigin + Vector( 48, 48, 32 );
+
+	// Find all buildings in the area
+	CBaseEntity *pList[32];
+	int count = UTIL_EntitiesInBox( pList, 32, vecMins, vecMaxs, FL_OBJECT );
+
+	for ( int i = 0; i < count; ++i )
+	{
+		CBaseObject *pBuilding = dynamic_cast<CBaseObject*>( pList[i] );
+		if ( pBuilding && pBuilding->GetTeamNumber() == TF_TEAM_PVE_DEFENDERS ) // Only RED buildings
+		{
+			// Stomp damage - destroy the building
+			CTakeDamageInfo stompInfo;
+			stompInfo.SetDamage( pBuilding->GetMaxHealth() + 100.0f ); // Ensure kill
+			stompInfo.SetDamageType( DMG_CRUSH );
+			stompInfo.SetInflictor( this );
+			stompInfo.SetAttacker( this );
+			stompInfo.SetDamagePosition( pBuilding->GetAbsOrigin() );
+			
+			pBuilding->TakeDamage( stompInfo );
+			
+			// Play stomp sound
+			EmitSound( "MVM.SentryBusterStep" );
+
+			// Instantly detonate the Sentry Buster when touching any RED building
+			SentryBusterDetonate();
+			return; // Don't continue checking after detonation
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Immediately respawn a player as a Sentry Buster, bypassing timers
+//-----------------------------------------------------------------------------
+void CTFPlayer::ForceRespawnAsSentryBuster( CObjectSentrygun *pTargetSentry )
+{
+	// Force immediate respawn regardless of timers
+	if ( !IsAlive() )
+	{
+		// Clear death time to bypass respawn timer
+		m_flDeathTime = 0;
+		
+		// Force respawn
+		ForceRespawn();
+	}
+	
+	// Convert to Sentry Buster
+	BecomeHumanSentryBuster( pTargetSentry );
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: Returns a portion of health every think.
 //-----------------------------------------------------------------------------
@@ -3552,6 +3791,9 @@ void CTFPlayer::PrecacheMvM()
 	PrecacheScriptSound( "MVM.Robot_Teleporter_Activate" );
 	PrecacheScriptSound( "MVM.MoneyPickup" );
 
+	//TEMPORARY PATCH - Figure it out why the sound plays but not precached?
+	PrecacheScriptSound("MVM.GiantDemoman_Grenadeshoot");
+
 	PrecacheMaterial( "effects/circle_nocull" );
 }
 
@@ -4345,6 +4587,7 @@ void CTFPlayer::Spawn()
 	}
 
 	m_flSpawnTime = gpGlobals->curtime;
+	m_flNextSentryBusterDetonateTime = 0; // Initialize Sentry Buster detonation timer
 
 	SetModelScale( 1.0f );
 	UpdateModel();
@@ -6499,17 +6742,18 @@ void CTFPlayer::PostInventoryApplication( void )
 	m_iPlayerSkinOverride = iPlayerSkinOverride;
 
 	//MVM Versus - Remove the robo cosmetic if we are not a bot
-	//TODO - Optimize this to only get called if your playermodel is a Robot
-
-	bool bRealRobot = TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() == TF_TEAM_PVE_INVADERS;
-	if ( !m_bIsRobot && !bRealRobot )
+	bool bMVMRobot = TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() == TF_TEAM_PVE_INVADERS && !IsFakeClient();
+	bool bMVMHlwPopfile = TFGameRules()->IsMannVsMachineMode() && g_pPopulationManager->IsPopFileEventType(MVM_EVENT_POPFILE_HALLOWEEN);
+	//IF Not wearing Robot costume && Real MVM Robot || OR || It's Halloween && Real MvM Robot || NOT FOR BOTS
+	if ( !m_bIsRobot && !bMVMRobot || bMVMHlwPopfile && bMVMRobot )
 	{
 		GetPlayerClass()->SetCustomModel(NULL, USE_CLASS_ANIMATIONS);
 		UpdateModel();
 	}
-	else
+	else 
 	{
 		MVM_TurnIntoRobot();
+		UpdateModel();
 	}
 
 	m_Inventory.ClearClassLoadoutChangeTracking();
@@ -11131,6 +11375,13 @@ int CTFPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 	if ( bTookDamage && bHadBallBeforeDamage )
 	{
 		g_pPasstimeLogic->OnBallCarrierDamaged( this, pTFAttacker, info );
+	}
+
+	// Sentry Buster auto-explode at 1 HP
+	if ( m_Shared.InCond( TF_COND_SENTRY_BUSTER ) && GetHealth() <= 1 )
+	{
+		// Force immediate detonation when health reaches 1
+		SentryBusterDetonate();
 	}
 
 	return info.GetDamage();
@@ -16375,10 +16626,10 @@ void CTFPlayer::PainSound( const CTakeDamageInfo &info )
 				//Robots need to play their Robotic pain lines!
 				if(TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() == TF_TEAM_PVE_INVADERS || IsMVMRobot() ) // MVM Versus - Wearable support)
 				{
-					EmitSound( pData->GetDeathSound(IsMiniBoss() ? DEATH_SOUND_GENERIC_GIANT_MVM : DEATH_SOUND_GENERIC_MVM ));
+					EmitSound( pData->GetDeathSound( IsMiniBoss() ? DEATH_SOUND_GENERIC_GIANT_MVM : DEATH_SOUND_GENERIC_MVM ) );
 				}
 				else
-					EmitSound(pData->GetDeathSound(DEATH_SOUND_GENERIC));
+					EmitSound( pData->GetDeathSound(DEATH_SOUND_GENERIC) );
 			}
 		}
 		return;
@@ -16550,14 +16801,21 @@ const char* CTFPlayer::GetSceneSoundToken( void )
 
 	int iOverrideVoiceSoundSet = kVoiceSoundSet_Default;
 	CALL_ATTRIB_HOOK_INT(iOverrideVoiceSoundSet, override_voice_sound_set);
+	bool bHalloweenMVM = TFGameRules()->IsMannVsMachineMode() && g_pPopulationManager->IsPopFileEventType(MVM_EVENT_POPFILE_HALLOWEEN);
 
 	if (iOverrideVoiceSoundSet == kVoiceSoundSet_Default)
 	{
-		//Engineer bot has some "special" voice clips that VALVe ruined
-		if (TFGameRules() && TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() == TF_TEAM_PVE_INVADERS || IsMVMRobot() )
+		//MvM Versus - We filter the voices depending if your playing MvM or wear the Robot Costume
+		if (TFGameRules() && TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() == TF_TEAM_PVE_INVADERS && !bHalloweenMVM || IsMVMRobot() )
 		{
-			if (IsMiniBoss())
+			int iGiants = GetPlayerClass()->GetClassIndex();
+			if ( IsMiniBoss() )
 			{
+				//If the player IS NOT one of the first 5 classes, return to normal voice.
+				//This patch is meant for missing voicelines, perhaps in future custom made can be made, if someone nails the filter.
+				if ( iGiants != TF_CLASS_SCOUT && iGiants != TF_CLASS_SOLDIER && iGiants != TF_CLASS_PYRO && iGiants != TF_CLASS_DEMOMAN && iGiants != TF_CLASS_HEAVYWEAPONS )
+					return "MVM_";
+			
 				return "M_MVM_";
 			}
 			else
@@ -19193,6 +19451,32 @@ void CTFPlayer::Taunt( taunts_t iTauntIndex, int iTauntConcept )
 	if ( !IsAllowedToTaunt() )
 		return;
 
+	// Handle Sentry Buster taunt - force specific detonation animation
+	if ( m_Shared.InCond( TF_COND_SENTRY_BUSTER ) )
+	{
+		// Force play the Sentry Buster detonation scene
+		const char *pszScene = "scenes/player/demoman/low/demoman_specialcompleted10.vcd";
+		
+		// Stop any current scene if exists
+		if ( m_hTauntScene )
+		{
+			// Use the StopScriptedScene function instead of direct casting
+			StopScriptedScene( this, m_hTauntScene );
+		}
+
+		// Play the detonation scene
+		float flDuration = InstancedScriptedScene( this, pszScene, &m_hTauntScene, 0.0f, false, NULL, true );
+		
+		// Set taunt state
+		m_Shared.AddCond( TF_COND_TAUNTING, flDuration );
+		m_flTauntRemoveTime = gpGlobals->curtime + flDuration;
+		
+		// Schedule the detonation after the animation
+		m_flNextSentryBusterDetonateTime = gpGlobals->curtime + (flDuration * 0.8f); // Detonate 80% through animation
+		
+		return;
+	}
+
 	if ( iTauntIndex == TAUNT_LONG )
 	{
 		AssertMsg( false, "Long Taunt should be using the new system which reads scene names from item definitions" );
@@ -19797,6 +20081,15 @@ static void DispatchRPSEffect( const CTFPlayer *pPlayer, const char* pszParticle
 //-----------------------------------------------------------------------------
 void CTFPlayer::DoTauntAttack( void )
 {
+	// Handle Sentry Buster detonation via taunting - check this first
+	// Note: For Sentry Busters, the detonation is handled by the timer set in Taunt()
+	// so we don't need to do anything here - just return
+	if ( m_Shared.InCond( TF_COND_SENTRY_BUSTER ) && IsTaunting() && IsAlive() )
+	{
+		// The detonation timer is already set by Taunt(), so just return
+		return;
+	}
+
 	if ( !IsTaunting() || !IsAlive() || m_iTauntAttack == TAUNTATK_NONE )
 	{
 		return;
@@ -21991,7 +22284,14 @@ void CTFPlayer::MVM_StartIdleSound(void)
 			}
 			case TF_CLASS_DEMOMAN:
 			{
-				pszSoundName = "MVM.GiantDemomanLoop";
+				if ( m_Shared.InCond( TF_COND_SENTRY_BUSTER ) )
+				{
+					pszSoundName = "MVM.SentryBusterLoop";
+				}
+				else
+				{
+					pszSoundName = "MVM.GiantDemomanLoop";
+				}
 				break;
 			}
 			case TF_CLASS_SCOUT:
@@ -22044,6 +22344,7 @@ void CTFPlayer::MVM_SetMinibossType(void)
     {
         AddTag("bot_giant");
         int iClass = GetPlayerClass()->GetClassIndex();
+		int iSentryBuster = m_Shared.InCond( TF_COND_SENTRY_BUSTER );
         switch(iClass)
         {
             case TF_CLASS_HEAVYWEAPONS:
@@ -25482,3 +25783,19 @@ void CC_RemoveCond( const CCommand &args )
 	}
 }
 static ConCommand removecond( "removecond", CC_RemoveCond, "Usage: removecond <condition name/id/all> [player name]. Remove a condition from the player.", FCVAR_NONE, RemoveCondAutocomplete );
+
+//-----------------------------------------------------------------------------
+// Purpose: Developer command to become a Sentry Buster
+//-----------------------------------------------------------------------------
+CON_COMMAND_F( become_buster, "Developer only: Transform yourself into a Human Sentry Buster.", FCVAR_CHEAT )
+{
+	// Check who is calling the command
+	CTFPlayer *pPlayer = ToTFPlayer( UTIL_GetCommandClient() );
+	if( !UTIL_HandleCheatCmdForPlayer(pPlayer) ) 
+		return;
+
+	// Transform the player into a Sentry Buster
+	pPlayer->BecomeHumanSentryBuster( NULL ); // No specific target sentry
+	
+	Msg( "Player %s has become a Human Sentry Buster!\n", pPlayer->GetPlayerName() );
+}
