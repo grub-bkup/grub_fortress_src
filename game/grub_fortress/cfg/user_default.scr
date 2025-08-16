@@ -86,6 +86,14 @@ DESCRIPTION INFO_OPTIONS
 		{ "0" }
 	}
 	
+	"tfgrub_ammobucket"
+	{
+		"#TFGrub_Ammobucket"
+		"#Tooltip_TFGrub_Ammobucket"
+		{ BOOL }
+		{ "0" }
+	}
+	
 	"hud_fastswitch"
 	{
 		"#GameUI_FastSwitchCheck"
@@ -123,6 +131,7 @@ DESCRIPTION INFO_OPTIONS
 			"#tf_dingalingaling_Beepo"					"6"
 			"#tf_dingalingaling_Vortex"					"7"
 			"#tf_dingalingaling_Squasher"				"8"
+			"#tfgrub_dingalingaling_bubble"				"9"
 		}
 		{ "-1" }
 	}
@@ -172,6 +181,7 @@ DESCRIPTION INFO_OPTIONS
 			"#tf_dingalingaling_Beepo"					"6"
 			"#tf_dingalingaling_Vortex"					"7"
 			"#tf_dingalingaling_Squasher"				"8"
+			"#tfgrub_dingalingaling_bubble"				"9"
 		}
 		{ "0" }
 	}
@@ -380,13 +390,6 @@ DESCRIPTION INFO_OPTIONS
 		{ "1" }
 	}
 
-	"tf_enable_glows_after_respawn"
-	{
-		"#TF_EnableGlowsAfterRespawn"
-		{ BOOL }
-		{ "1" }
-	}
-
 	"cl_hud_playerclass_use_playermodel"
 	{
 		"#GameUI_HudPlayerClassUsePlayerModel"
@@ -399,7 +402,7 @@ DESCRIPTION INFO_OPTIONS
 	{
 		"#TF_viewmodelfov_option"
 		"#Tooltip_viewmodelfov_option"
-		{ SLIDER 54 70 }
+		{ SLIDER 54 90 }
 		{ "1" }
 	}
 	
@@ -668,6 +671,14 @@ DESCRIPTION INFO_OPTIONS
 		{ BOOL }
 		{ "0" }
 	}
+
+	"tfgrub_mirrored"
+	{
+		"#TFGrub_Mirrored"
+		"#Tooltip_TFGrub_Mirrored"
+		{ BOOL }
+		{ "0" }
+	}
 	
 	"tf_use_min_viewmodels"
 	{
@@ -682,7 +693,7 @@ DESCRIPTION INFO_OPTIONS
 		"#GameUI_DisableSprays"
 		"#Tooltip_DisableSprays"
 		{ BOOL }
-		{ "1" }
+		{ "0" }
 	}
 
 	"tf_hide_custom_decals"
@@ -756,28 +767,20 @@ DESCRIPTION INFO_OPTIONS
 		{ "1" }
 	}
 
-	"cl_promotional_codes_button_show"
+	"tf_discord_rpc"
 	{
-		"#TF_ShowPromotionalCodesButton"
-		"#Tooltip_ShowPromotionalCodesButton"
+		"#TFGrub_DiscordRPC"
+		"#TFGrub_DiscordRPC"
 		{ BOOL }
 		{ "1" }
 	}
-
-	"bf_disable_cosmetics"
+	
+	"tf_discord_rpc_updaterate"
 	{
-		"#BF_DisableCosmetics"
-		"#Tooltip_DisableCosmetics"
-		{ BOOL }
-		{ "0" }
-	}
-
-	"bf_disable_unusual_effects"
-	{
-		"#BF_DisableUnusualEffects"
-		"#Tooltip_DisableUnusualEffects"
-		{ BOOL }
-		{ "0" }
+		"#TFGrub_DiscordRPC_UpdateRate"
+		"#Tooltip_TFGrub_DiscordRPC_UpdateRate"
+		{ NUMBER 5 15}
+		{ "5" }
 	}
 
 	"category8"
@@ -872,4 +875,3 @@ DESCRIPTION INFO_OPTIONS
 		{ "0" }
 	}
 }
-
