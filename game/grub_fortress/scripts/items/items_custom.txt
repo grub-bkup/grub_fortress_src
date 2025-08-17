@@ -202,14 +202,14 @@ not sure if it should be used as a weapon"
 		// Nailgun 
 		"32001"
 		{
-			"name"						"TF_WEAPON_NAILGUN"
+			"name"						"Nailgun"
 			"prefab"					"weapon_nailgun"
 			"moditem"					"1"
 		}
 		// RPG 
 		"32002"
 		{
-			"name"						"TF_WEAPON_RPG"
+			"name"						"RPG"
 			"item_quality"				"unique"
 			"item_name"					"RPG"
 			"prefab"					"weapon_rocketlauncher"
@@ -300,7 +300,7 @@ not sure if it should be used as a weapon"
 		// Pipebomb Launcher (Old name : Not So Sticky Bomb Launcher)
 		"32004"
 		{
-			"name"						"TF_WEAPON_STICKLESS"
+			"name"						"The Pipebomb Launcher"
 			"item_quality"				"unique"
 			"item_name"					"The Pipebomb Launcher"
 			"prefab"					"weapon_stickybomb_launcher"
@@ -395,7 +395,7 @@ not sure if it should be used as a weapon"
 //		}
 		"32006"
 		{
-			"name"						"TF_WEAPON_UNDER_PRESSURE"
+			"name"						"The Under Pressure"
 			"item_quality"				"unique"
 			"prefab"					"weapon_syringegun"		
 			"item_description"			"(Credits : Haau, Dim)"				
@@ -442,7 +442,7 @@ not sure if it should be used as a weapon"
 		}		
 		"32007"
 		{
-			"name"						"TF_WEAPON_PERFORATOR"
+			"name"						"The Perforator"
 			"item_quality"				"unique"
 			"prefab"					"weapon_minigun"	
 			"show_in_armory"			"1"	
@@ -505,7 +505,7 @@ not sure if it should be used as a weapon"
 		}			
 		"32008"
 		{
-			"name"						"TF_WEAPON_BIGOWEN"
+			"name"						"The Big Owen"
 			"item_quality"				"unique"
 			"prefab"					"weapon_minigun"	
 			"item_class"				"tf_weapon_minigun_singleshot"
@@ -575,7 +575,7 @@ not sure if it should be used as a weapon"
 		}
 		"32009"
 		{
-			"name"						"TF_WEAPON_BACKPACK_ENGINEER"
+			"name"						"Metal Backpack"
 			"item_class"				"tf_wearable"
 			"show_in_armory"			"1"
 			"moditem"					"1"
