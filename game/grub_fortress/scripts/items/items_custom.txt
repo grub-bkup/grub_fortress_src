@@ -100,15 +100,6 @@ not sure if it should be used as a weapon"
 			"stored_as_integer"	"0"		
 		}
 		// CUSTOM ONES 
-		"4000"
-		{
-			"name"	"override voice sound set"
-			"attribute_class"	"override_voice_sound_set"
-			"description_format"	"value_is_additive"
-			"hidden"	"1"
-			"effect_type"	"positive"
-			"stored_as_integer"	"0"
-		}
 		"4001"
 		{
 			"name"	"sniperrifle has laser pointer"
@@ -156,27 +147,45 @@ not sure if it should be used as a weapon"
 			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
-		"4006"
+		"4007"
 		{
-			"name"	"robotrobotrobotrobot"
-			"attribute_class"	"robotrobotrobotrobot"
+			"name"	"engy sentry rockets firerate bonus"
+			"attribute_class"	"mult_engy_sentry_rockets_firerate"
 			"description_format"	"value_is_additive"
 			"hidden"	"1"
 			"effect_type"	"neutral"
 			"stored_as_integer"	"0"
 		}
+		"4013"
+		{
+			"name"	"airblast pushes teammates"
+			"attribute_class"	"airblast_pushes_teammates"
+			"description_string"	"#Attrib_AirblastYourTeam"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"4011"
+		{
+			"name"	"has infinite ammo"
+			"attribute_class"	"has_infinite_ammo"
+			"description_format"	"value_is_additive"
+			"hidden"	"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
+		"4015"
+		{
+			"name"	"projectile has gravity"
+			"attribute_class"	"projectile_has_gravity"
+			"description_format"	"value_is_additive"
+			"hidden"	"1"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
 		// GRUB FORTRESS ATTRIBUTES
 		"5000"
-		{
-			"name"	"rocket gravity"
-			"attribute_class"	"mod_rocket_gravity"
-			"description_string"	"#Attrib_RocketGravity"
-			"description_format"	"value_is_additive_percentage"
-			"hidden"	"0"
-			"effect_type"	"neutral"
-			"stored_as_integer"	"0"
-		}
-		"5001"
 		{
 			"name"	"grenade no stick"
 			"attribute_class"	"grenade_no_stick"
@@ -186,7 +195,7 @@ not sure if it should be used as a weapon"
 			"effect_type"	"neutral"
 			"stored_as_integer"	"0"
 		}
-		"5002"
+		"5001"
 		{
 			"name"	"grenade no bounce stickless"
 			"attribute_class"	"grenade_no_bounce"
@@ -218,9 +227,9 @@ not sure if it should be used as a weapon"
 			"moditem"					"1"
 			"attributes"
 			{
-				"rocket gravity"
+				"projectile has gravity"
 				{
-					"attribute_class"	"mod_rocket_gravity"
+					"attribute_class"	"projectile_has_gravity"
 					"value"				"1"
 				}
 				"damage bonus"
@@ -393,6 +402,7 @@ not sure if it should be used as a weapon"
 // 				}
 // 			}
 //		}
+		// The Under Pressure
 		"32006"
 		{
 			"name"						"The Under Pressure"
@@ -440,6 +450,7 @@ not sure if it should be used as a weapon"
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"			
 		}		
+		// The Perforator
 		"32007"
 		{
 			"name"						"The Perforator"
@@ -502,7 +513,8 @@ not sure if it should be used as a weapon"
 			}	
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
-		}			
+		}
+		// The Big Owen
 		"32008"
 		{
 			"name"						"The Big Owen"
@@ -573,6 +585,7 @@ not sure if it should be used as a weapon"
 			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
 			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
 		}
+		// Metal Backpack
 		"32009"
 		{
 			"name"						"Metal Backpack"

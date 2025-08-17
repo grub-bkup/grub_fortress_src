@@ -71,6 +71,8 @@ bool ToolFramework_SetupEngineMicrophone( Vector &origin, QAngle &angles );
 extern ConVar default_fov;
 extern bool g_bRenderingScreenshot;
 
+extern ConVar tfgrub_mirrored;
+
 #if !defined( _X360 )
 #define SAVEGAME_SCREENSHOT_WIDTH	180
 #define SAVEGAME_SCREENSHOT_HEIGHT	100
@@ -790,7 +792,15 @@ void CViewRender::SetUpViews()
 	AudioState_t audioState;
 	audioState.m_Origin = viewEye.origin;
 
-	QAngle audioStateAngles = QAngle(viewEye.angles.x, viewEye.angles.y + 180, viewEye.angles.z);
+	QAngle audioStateAngles;
+	if (tfgrub_mirrored.GetBool())
+	{
+		audioStateAngles = QAngle(viewEye.angles.x, viewEye.angles.y + 180.0f, viewEye.angles.z);
+	}
+	else
+	{
+		audioStateAngles = QAngle(viewEye.angles.x, viewEye.angles.y, viewEye.angles.z);
+	}
 	audioState.m_Angles = audioStateAngles;
 	audioState.m_bIsUnderwater = pPlayer && pPlayer->AudioStateIsUnderwater( viewEye.origin );
 

@@ -7,7 +7,7 @@ DESCRIPTION INFO_OPTIONS
 		"Grub Fortress"
 		{ CATEGORY }
 	}
-	"credit1_1"
+	"grub"
 	{
 		"by Grub
 		NOTICE :If I Forgot to credit someone in here, reach out to me"
@@ -26,28 +26,28 @@ DESCRIPTION INFO_OPTIONS
 		"Weapon Models"
 		{ CATEGORY }
 	}	
-	"credit2_1"
+	"weapon1"
 	{
 		"The Under Presusre - Haau, Dim"
 		"gamebanana.com/mods/529270"
 		{ BOOL }
 		{ "1" }
 	}
-	"credit2_2"
+	"weapon2"
 	{
 		"The Perforator - Haau, kibbleknight"
 		"gamebanana.com/mods/516732"
 		{ BOOL }
 		{ "1" }
 	}
-	"credit2_3"
+	"weapon3"
 	{
 		"The Big Owen - Haau, kibbleknight"
 		"gamebanana.com/mods/603188"
 		{ BOOL }
 		{ "1" }
 	}
-	"credit_2_4"
+	"weapon4"
 	{
 		"Pipebomb Launcher - Haau, Extra Ram"
 		"gamebanana.com/mods/418217"
@@ -59,63 +59,56 @@ DESCRIPTION INFO_OPTIONS
 		"Community Help/Contributions"
 		{ CATEGORY }
 	}	
-	"credit3_1"
+	"betam"
 	{
 		"BetaM - Custom Items, Credits menu, misc. fixes"
 		"www.youtube.com/BetaM"
 		{ BOOL }
 		{ "1" }
 	}	
-	"credit3_2"
+	"bf2"
 	{
 		"Better Fortress 2 - The mod Grub Fortress is a fork of"
 		"github.com/ALIEN31ITA/Better-Fortress-2"
 		{ BOOL }
 		{ "1" }
-	}	
-	"credit3_3"
-	{
-		"Team Fortress 2 Classic - Rocket Gravity Attribute"
-		"www.tf2classic.com"
-		{ BOOL }
-		{ "1" }
-	}	
-	"credit3_4"
+	}
+	"tf2gr"
 	{
 		"Team Fortress 2 Goldrush - Removed MYM Hud, And V_Model Support"
 		"www.tf2goldrush.com/"
 		{ BOOL }
 		{ "1" }
 	}
-	"credit3_5"
+	"ttrf_old_menu"
 	{
 		"Toru the Red Fox - Old TF2 Main menu"
 		"github.com/TorutheRedFox/source-sdk-2013"
 		{ BOOL }
 		{ "1" }
 	}
-	"credit3_6"
+	"sf2"
 	{
 		"Solo Fortress 2, Kepler - Item schema delete attribute support"
 		"moddb.com/mods/solo-fortress-2"
 		{ BOOL }
 		{ "1" }
 	}
-	"credit3_7"
+	"hactica"
 	{
 		"Hactica - Ultimate Weapon Animation Fixes"
 		"gamebanana.com/wips/86367"
 		{ BOOL }
 		{ "1" }
 	}
-	"credit3_8"
+	"hl2mirrored"
 	{
 		"NvC-DmN-CH - HL2 Mirrored code"
 		"github.com/NvC-DmN-CH/Half-Life-2-Mirrored"
 		{ BOOL }
 		{ "1" }
 	}
-	"credit3_9"
+	"wgetjane"
 	{
 		"wgetJane - Fix sniper laser dot position being calculated inaccurately"
 		"github.com/ValveSoftware/source-sdk-2013/pull/637"
