@@ -1,0 +1,1 @@
+grub_fortress_win64.exe -tools -nop4 +sv_lan 1 +map devtest +mp_disable_respawn_times 1
