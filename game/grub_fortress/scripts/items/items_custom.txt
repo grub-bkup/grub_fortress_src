@@ -205,6 +205,15 @@ not sure if it should be used as a weapon"
 			"hidden"	"0"
 			"effect_type"	"positive"
 		}
+		"5002"
+		{
+			"name"	"heal teammate on hit"
+			"attribute_class"	"heal_teammate_on_hit"
+			"description_string"	"Attrib_heal_teammate_on_hit"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+		}
 	}
 	"items"
 	{
@@ -620,6 +629,37 @@ not sure if it should be used as a weapon"
 			}
 			"mouse_pressed_sound"		"ui/item_pack_pickup.wav"
 			"drop_sound"				"ui/item_pack_drop.wav"
+		}
+		// Heal Saw 
+		"32010"
+		{
+			"name"						"Heal Saw"
+			"item_name"					"Der Erwecker"
+			"prefab"					"weapon_bonesaw"
+			"item_quality"				"unique"
+			"image_inventory"			"backpack/workshop/weapons/c_models/c_needlesaw/c_needlesaw"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"model_player"				"models/workshop/weapons/c_models/c_needlesaw/c_needlesaw.mdl"
+			"moditem" 					"1"
+			"attributes"
+			{
+				"heal teammate on hit"
+				{
+					"attribute_class"	"heal_teammate_on_hit"
+					"value"				"50"
+				}
+				"single wep deploy time decreased"
+				{
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value"	"0.5"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.25"
+				}
+			}
 		}
 	}
 }

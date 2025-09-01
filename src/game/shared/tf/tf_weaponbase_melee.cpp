@@ -6,6 +6,7 @@
 
 #include "cbase.h"
 #include "tf_weaponbase_melee.h"
+#include "tf_weapon_medigun.h"
 #include "effect_dispatch_data.h"
 #include "tf_gamerules.h"
 
@@ -671,6 +672,25 @@ bool CTFWeaponBaseMelee::OnSwingHit( trace_t &trace )
 					pPlayer->TakeDamage( info );
 				}
 			}
+			// heal teammates on hit (doesnt take away your health)
+			int nHealOnHit = 0;
+			CALL_ATTRIB_HOOK_INT(nHealOnHit, heal_teammate_on_hit);
+			if (nHealOnHit != 0)
+			{
+				// Always keep at least 1 health for ourselves (Left over code from the other attrib, if it works, it works -Grub)
+				nGiveHealthOnHit = Min(pPlayer->GetHealth() - 1, nHealOnHit);
+				int nHealthGiven = pTargetPlayer->TakeHealth(nHealOnHit, DMG_GENERIC);
+
+				if (nHealthGiven > 0)
+				{
+					CWeaponMedigun *pMedigun = static_cast<CWeaponMedigun *>( pPlayer->Weapon_OwnsThisID( TF_WEAPON_MEDIGUN ) );
+					if ( pMedigun )
+					{
+						pMedigun->AddCharge( 0.01f );
+					}
+				}
+			}
+
 		}
 		else
 		{
