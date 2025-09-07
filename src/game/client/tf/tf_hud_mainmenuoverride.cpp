@@ -3006,7 +3006,6 @@ void CMainMenuToolTip::SetText(const char* pszText)
 //-----------------------------------------------------------------------------
 // Purpose: Reload the .res file
 //-----------------------------------------------------------------------------
-#if defined( STAGING_ONLY )
 ConVar tf_icon_festive("tf_icon_festive", 0);
 CON_COMMAND(mainmenu_refresh, "")
 {
@@ -3016,7 +3015,7 @@ CON_COMMAND(mainmenu_refresh, "")
 
 	pMMPanel->InvalidateLayout(true, true);
 }
-
+#if defined( STAGING_ONLY )
 CON_COMMAND(create_icons, "Generate 512 x 512 Paint Kit Item Icons for SteamMarket, Specify min and max itemdef ranges if desired")
 {
 	tf_icon_festive.SetValue(false);

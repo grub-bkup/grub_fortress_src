@@ -245,4 +245,62 @@ class CAchievementTFGrubPlayGameEveryMap : public CTFAchievementFullRound
 };
 DECLARE_ACHIEVEMENT( CAchievementTFGrubPlayGameEveryMap, ACHIEVEMENT_TFGRUB_PLAY_GAME_EVERYMAP, "TFGRUB_PLAY_GAME_EVERYMAP", 5 );
 
+class CAchievementTFGrubScout_KillWithNailgun : public CBaseTFAchievement
+{
+	void Init() 
+	{
+		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
+		SetGoal( 50 ); // kill 50 enemies with the nailgun
+	}
+
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	{
+		// Achievement for killing enemies with the nailgun
+		if ( event->GetInt( "weaponid" ) == TF_WEAPON_NAILGUN )
+		{
+			IncrementCount();
+		}
+	}
+};
+DECLARE_ACHIEVEMENT( CAchievementTFGrubScout_KillWithNailgun, ACHIEVEMENT_TF_SCOUT_KILL_WITH_NAILGUN, "TF_SCOUT_KILL_WITH_NAILGUN", 5 );
+
+class CAchievementTFGrubScout_KillWithNailgun2 : public CBaseTFAchievement
+{
+	void Init()
+	{
+		SetFlags(ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS);
+		SetGoal(100); // kill 100 enemies with the nailgun
+	}
+
+	virtual void Event_EntityKilled(CBaseEntity* pVictim, CBaseEntity* pAttacker, CBaseEntity* pInflictor, IGameEvent* event)
+	{
+		// Achievement for killing enemies with the nailgun
+		if (event->GetInt("weaponid") == TF_WEAPON_NAILGUN)
+		{
+			IncrementCount();
+		}
+	}
+};
+DECLARE_ACHIEVEMENT(CAchievementTFGrubScout_KillWithNailgun2, ACHIEVEMENT_TF_SCOUT_KILL_WITH_NAILGUN2, "TF_SCOUT_KILL_WITH_NAILGUN2", 5);
+
+class CAchievementTFGrubScout_KillWithNailgun3 : public CBaseTFAchievement
+{
+	void Init()
+	{
+		SetFlags(ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS);
+		SetGoal(1000); // kill 1000 enemies with the nailgun
+	}
+
+	virtual void Event_EntityKilled(CBaseEntity* pVictim, CBaseEntity* pAttacker, CBaseEntity* pInflictor, IGameEvent* event)
+	{
+		// Achievement for killing enemies with the nailgun
+		if (event->GetInt("weaponid") == TF_WEAPON_NAILGUN)
+		{
+			IncrementCount();
+		}
+	}
+};
+DECLARE_ACHIEVEMENT(CAchievementTFGrubScout_KillWithNailgun3, ACHIEVEMENT_TF_SCOUT_KILL_WITH_NAILGUN3, "TF_SCOUT_KILL_WITH_NAILGUN3", 5);
+
+
 #endif // CLIENT_DLL
