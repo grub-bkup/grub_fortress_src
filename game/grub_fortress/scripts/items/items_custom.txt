@@ -214,6 +214,17 @@ not sure if it should be used as a weapon"
 			"hidden"	"0"
 			"effect_type"	"positive"
 		}
+		"5003"
+		{
+			"name"	"add uber charge on kill"
+			"attribute_class"	"add_onkill_ubercharge"
+			"description_string"	"#Attrib_AddUber_OnKill_Positive"
+			"description_format"	"value_is_additive_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"armory_desc"	"on_kill"
+			"stored_as_integer"	"0"
+		}
 	}
 	"items"
 	{

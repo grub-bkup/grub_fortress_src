@@ -52,6 +52,35 @@
 				"soldier"	"secondary"
 			}
 		}
+		"weapon_ubersaw" // The Ubersaw
+		{
+			"attributes"
+			{
+				"add uber charge on hit"
+				{
+					"value"	"delete"
+				}
+				"add uber charge on kill"
+				{
+					"attribute_class"	"add_onkill_ubercharge"
+					"value"	"0.25"
+				}
+				"fire rate penalty"
+				{
+					"value"	"delete"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.5"
+				}
+				"crit mod disabled"
+				{
+					"attribute_class"	"mult_crit_chance"
+					"value"	"0"
+				}
+			}
+		}
 	}
 	"items"
 	{

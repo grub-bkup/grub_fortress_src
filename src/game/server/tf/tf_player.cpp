@@ -12991,6 +12991,31 @@ void CTFPlayer::OnKilledOther_Effects( CBaseEntity *pVictim, const CTakeDamageIn
 		}
 	}
 
+	if ( IsPlayerClass( TF_CLASS_MEDIC ) )
+	{
+		float flUberChargeBonus = 0.0f;
+		CALL_ATTRIB_HOOK_FLOAT(flUberChargeBonus, add_onkill_ubercharge );
+
+		if (flUberChargeBonus > 0.0f)
+		{
+			CWeaponMedigun* pMedigun = dynamic_cast<CWeaponMedigun*>(
+				Weapon_OwnsThisID(TF_WEAPON_MEDIGUN));
+
+			if (pMedigun)
+			{
+				if (TFGameRules() && TFGameRules()->IsPowerupMode() )
+				{
+					if (m_Shared.GetCarryingRuneType() != RUNE_NONE )
+						flUberChargeBonus *= 0.2f;
+					else
+						flUberChargeBonus *= 0.4f;
+				}
+
+				pMedigun->AddCharge( flUberChargeBonus );
+			}
+		}
+	}
+
 	int iSpeedBoostOnKill = 0;
 	CALL_ATTRIB_HOOK_INT_ON_OTHER( pWeapon, iSpeedBoostOnKill, speed_boost_on_kill );
 	if ( iSpeedBoostOnKill )
