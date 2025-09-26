@@ -454,6 +454,11 @@ not sure if it should be used as a weapon"
 					"attribute_class"	"mult_postfiredelay"
 					"value"				"0.5"
 				}			
+				"Reload time decreased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"	"0.65"
+				}
 				"clip size penalty"
 				{
 					"attribute_class"	"mult_clipsize"
@@ -500,10 +505,10 @@ not sure if it should be used as a weapon"
 					"attribute_class"	"override_projectile_type"
 					"value"				"32"
 				}
-				"damage penalty" 
+				"damage bonus" 
 				{
 					"attribute_class"	"mult_dmg"
-					"value"				"0.75"
+					"value"				"2"
 				}			
 				"fire rate bonus"
 				{
@@ -514,7 +519,7 @@ not sure if it should be used as a weapon"
 				{
 					"attribute_class"	"mult_maxammo_primary"
 					"value"				"1.5"
-				}		
+				}
 				"spread penalty"
 				{
 					"attribute_class"	"mult_spread_scale"
