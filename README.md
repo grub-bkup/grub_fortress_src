@@ -31,6 +31,9 @@ Keep in mind, most of it is pretty shitty
     
   - **Better Fortress 2** – The mod Grub Fortress is a fork of  
     https://github.com/ALIEN31ITA/Better-Fortress-2
+
+  - **Ultimate Visual Fix Pack** - agrastiOs, Nonhuman, Nonhuman, Whurr, PieSavvy, JarateKing, FlaminSarge  
+    https://github.com/agrastiOs/Ultimate-TF2-Visual-Fix-Pack
     
   - **Team Fortress 2 Goldrush** – Removed MYM Hud, And V_Model Support  
     https://www.tf2goldrush.com/

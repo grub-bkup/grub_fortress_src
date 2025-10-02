@@ -76,7 +76,7 @@ DESCRIPTION INFO_OPTIONS
 	"uvf"
 	{
 		"Ultimate Visual Fix Pack - agrastiOs, Nonhuman, Nonhuman, Whurr, PieSavvy, JarateKing, FlaminSarge"
-		"https://github.com/agrastiOs/Ultimate-TF2-Visual-Fix-Pack"
+		"github.com/agrastiOs/Ultimate-TF2-Visual-Fix-Pack"
 		{ BOOL }
 		{ "1" }
 	}
