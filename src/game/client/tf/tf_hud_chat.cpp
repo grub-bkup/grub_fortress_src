@@ -44,9 +44,9 @@ int ClientUTIL_PlayerIsModDev( int clientIndex )
 			return 1; // Devs
 		break;
 
-//		case 76561199500159028: // Moon - The Linux Guy
-//			return 3; // Contributors
-//		break;
+		case 76561199026136810: // Sargeant Death - The Balance Journalist
+			return 3; // Contributors
+		break;
 
 		default:
 			return 0;

@@ -225,6 +225,15 @@ not sure if it should be used as a weapon"
 			"armory_desc"	"on_kill"
 			"stored_as_integer"	"0"
 		}
+		"5004"
+		{
+			"name"	"spunup_damage_resistance_simple"
+			"attribute_class"	"spunup_damage_resistance_simple"
+			"description_string"	"#Attrib_spup_damage_resistance_simple"
+			"description_format"	"value_is_percentage"
+			"hidden"	"0"
+			"effect_type"	"positive"
+		}
 	}
 	"items"
 	{

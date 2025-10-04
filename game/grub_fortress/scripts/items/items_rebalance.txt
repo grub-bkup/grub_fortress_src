@@ -13,6 +13,16 @@
 			"effect_type"	"negative"
 			"stored_as_integer"	"0"
 		}
+		"296"
+		{
+			"name"	"sapper kills collect crits"
+			"attribute_class"	"sapper_kills_collect_crits"
+			"description_string"	"#Attrib_BackstabKillsCollectCrits"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
     }
 	"prefabs"
 	{
@@ -91,6 +101,22 @@
 					"value"				"1.4"
 				}
 			}
+		}
+		"weapon_gatling_gun" // The Brass Beast
+		{
+			"attributes"
+			{
+				"spunup_damage_resistance"
+				{
+					"value"					"delete"
+				}
+				"spunup_damage_resistance_simple"
+				{
+					"attribute_class"		"spunup_damage_resistance_simple"
+					"value"					"0.80"
+				}
+			}
+		}	
 	}
 	"items"
 	{
@@ -116,6 +142,58 @@
 				"medic"					"1"
 				"sniper"				"1"
 				"spy"					"1"
+			}
+		}
+		"311" // The Buffalo Steak Sandvich
+		{
+			"attributes"
+			{
+				"energy buff dmg taken multiplier"
+				{
+					"value"				"delete"
+				}
+			}
+		}
+		"525" // The Diamondback
+		{
+			"attributes"
+			{
+				"crit_dmg_falloff"
+				{
+					"attribute_class"	"crit_dmg_falloff"
+					"value"				"1"
+				}
+			}
+		}
+		"609" // The Scottish Handshake
+		{	
+			"attributes"
+			{
+				"provide on active"
+				{
+					"attribute_class"	"provide_on_active"
+					"value"				"1"
+				}
+				"mod shovel speed boost"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value"				"1"
+				}
+				"reduced_healing_from_medics"
+				{
+					"attribute_class"	"mult_healing_from_medics"
+					"value"				"0.1"
+				}
+				"self mark for death"
+				{
+					"attribute_class"	"self_mark_for_death"
+					"value"				"1"
+				}
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value"				"1"
+				}
 			}
 		}
 		"772" // Baby Face's Blaster
@@ -164,34 +242,18 @@
 				}
 			}
 		}
-		"609" // The Scottish Handshake
+		"1103" // The Back Scatter
 		{
 			"attributes"
 			{
-				"provide on active"
+				"weapon spread bonus"
 				{
-					"attribute_class"	"provide_on_active"
-					"value"				"1"
+					"attribute_class" 	"mult_spread_scale"
+					"value" "0.80"
 				}
-				"mod shovel speed boost"
+				"spread penalty"
 				{
-					"attribute_class"	"set_weapon_mode"
-					"value"				"1"
-				}
-				"reduced_healing_from_medics"
-				{
-					"attribute_class"	"mult_healing_from_medics"
-					"value"				"0.1"
-				}
-				"self mark for death"
-				{
-					"attribute_class"	"self_mark_for_death"
-					"value"				"1"
-				}
-				"special taunt"
-				{
-					"attribute_class"	"special_taunt"
-					"value"				"1"
+					"value" "delete"
 				}
 			}
 		}

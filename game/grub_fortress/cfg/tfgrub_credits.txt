@@ -14,6 +14,12 @@ DESCRIPTION INFO_OPTIONS
 		{ BOOL }
 		{ "1" }
 	}		
+	"sergantdeath"
+	{
+		"Sargeant Death - The Balance Journalist"
+		{ BOOL }
+		{ "1" }
+	}
 	"category2"
 	{
 		"Weapon Models"
