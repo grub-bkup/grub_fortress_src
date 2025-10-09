@@ -3,6 +3,16 @@
 {
     "attributes"
     {
+		"296"
+		{
+			"name"	"sapper kills collect crits"
+			"attribute_class"	"sapper_kills_collect_crits"
+			"description_string"	"#Attrib_BackstabKillsCollectCrits"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"1"
+		}
 		"419"
 		{
 			"name"	"hype resets on jump"
@@ -13,15 +23,14 @@
 			"effect_type"	"negative"
 			"stored_as_integer"	"0"
 		}
-		"296"
+		"738"
 		{
-			"name"	"sapper kills collect crits"
-			"attribute_class"	"sapper_kills_collect_crits"
-			"description_string"	"#Attrib_BackstabKillsCollectCrits"
-			"description_format"	"value_is_additive"
+			"name"	"spunup_damage_resistance"
+			"attribute_class"	"spunup_damage_resistance"
+			"description_string"	"#Attrib_spup_damage_resistance_positive"
+			"description_format"	"value_is_inverted_percentage"
 			"hidden"	"0"
 			"effect_type"	"positive"
-			"stored_as_integer"	"1"
 		}
     }
 	"prefabs"
