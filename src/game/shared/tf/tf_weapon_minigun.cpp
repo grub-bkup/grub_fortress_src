@@ -69,7 +69,7 @@ BEGIN_DATADESC( CTFMinigun )
 END_DATADESC()
 #endif
 
-CREATE_SIMPLE_WEAPON_TABLE(TFMinigun_SingleShot, tf_weapon_minigun_singleshot)
+CREATE_SIMPLE_WEAPON_TABLE( TFMinigun_SingleShot, tf_weapon_minigun_singleshot )
 
 //=============================================================================
 //

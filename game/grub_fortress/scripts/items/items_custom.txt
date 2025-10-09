@@ -471,7 +471,7 @@ not sure if it should be used as a weapon"
 				"clip size penalty"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"				"0.50"			
+					"value"				"0.25"			
 				}			
 				"damage penalty"
 				{
@@ -490,7 +490,7 @@ not sure if it should be used as a weapon"
 		{
 			"name"						"The Perforator"
 			"item_quality"				"unique"
-			"prefab"					"weapon_minigun"	
+			"prefab"					"weapon_minigun"
 			"show_in_armory"			"1"	
 			"moditem"					"1"
 			"item_description"			"Shoots nail projectiles
@@ -529,11 +529,11 @@ not sure if it should be used as a weapon"
 					"attribute_class"	"mult_maxammo_primary"
 					"value"				"1.5"
 				}
-				"spread penalty"
-				{
-					"attribute_class"	"mult_spread_scale"
-					"value"				"1.50"
-				}	
+//				"spread penalty"
+//				{
+//					"attribute_class"	"mult_spread_scale"
+//					"value"				"1.5"
+//				}
 //				"minigun spinup time increased"
 //				{
 //					"attribute_class"	"mult_minigun_spinup_time"

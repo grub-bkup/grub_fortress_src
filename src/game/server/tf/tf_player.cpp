@@ -20672,7 +20672,7 @@ void CTFPlayer::DoTauntAttack( void )
 					CWeaponMedigun *pMedigun = (CWeaponMedigun *) Weapon_OwnsThisID( TF_WEAPON_MEDIGUN );
 					if ( pMedigun )
 					{
-						pMedigun->AddCharge( 0.5f );
+						pMedigun->AddCharge( 1.0f );
 					}
 				}
 			}
