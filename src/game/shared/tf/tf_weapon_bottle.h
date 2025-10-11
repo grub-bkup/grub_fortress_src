@@ -49,9 +49,7 @@ public:
 	virtual float	GetSpeedMod(void);
 	int				GetBottleType(void) { int iMode = 0; CALL_ATTRIB_HOOK_INT(iMode, set_weapon_mode); return iMode; };
 	virtual bool	HasSpeedBoost(void) { return (GetBottleType() == BOTTLE_SPEED_BOOST); }
-#ifndef CLIENT_DLL
-	virtual int		GetDamageCustom();
-#endif
+
 	void			MoveSpeedThink(void);
 private:
 	bool			m_bHolstering;

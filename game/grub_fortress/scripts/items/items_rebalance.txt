@@ -176,6 +176,7 @@
 		}
 		"609" // The Scottish Handshake
 		{	
+			"item_iconname"	"scotland_shard"
 			"attributes"
 			{
 				"provide on active"
@@ -196,11 +197,6 @@
 				"self mark for death"
 				{
 					"attribute_class"	"self_mark_for_death"
-					"value"				"1"
-				}
-				"special taunt"
-				{
-					"attribute_class"	"special_taunt"
 					"value"				"1"
 				}
 			}

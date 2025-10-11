@@ -377,19 +377,6 @@ float CTFBreakableMelee::GetSpeedMod(void)
 	else
 		return 1.6f;
 }
-#ifndef CLIENT_DLL
-int CTFBreakableMelee::GetDamageCustom()
-{
-	if (GetBottleType() == BOTTLE_SPEED_BOOST)
-	{
-		return TF_DMG_CUSTOM_PICKAXE;
-	}
-	else
-	{
-		return BaseClass::GetDamageCustom();
-	}
-}
-#endif
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
