@@ -7428,7 +7428,12 @@ float CTFGameRules::ApplyOnDamageAliveModifyRules( const CTakeDamageInfo &info, 
 			// Standard Stealth gives small damage reduction
 			else if ( pVictim->m_Shared.InCond( TF_COND_STEALTHED ) )
 			{
-				flRealDamage *= tf_stealth_damage_reduction.GetFloat();
+				float bNoDamageReduction = 0;
+				CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pVictim, bNoDamageReduction, mod_cloak_no_damage_reduction );
+				if ( !bNoDamageReduction )
+				{
+					flRealDamage *= tf_stealth_damage_reduction.GetFloat();
+				}
 			}
 		}
 

@@ -234,6 +234,25 @@ not sure if it should be used as a weapon"
 			"hidden"	"0"
 			"effect_type"	"positive"
 		}
+		"5005"
+		{
+			"name"	"sanguisuge_nooverheal"
+			"attribute_class"	"sanguisuge_nooverheal"
+			"description_string"	"#Attrib_Sanguisuge_NoOverheal"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"stored_as_integer"	"0"
+		}
+		"5006"
+		{
+			"name"	"mod_cloak_no_damage_reduction"
+			"attribute_class"	"mod_cloak_no_damage_reduction"
+			"description_string"	"#Attrib_mod_cloak_no_damage_reduction"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"negative"
+		}
 	}
 	"items"
 	{

@@ -163,6 +163,45 @@
 				}
 			}
 		}
+		"356"
+		{
+			"attributes"
+			{
+				"sanguisuge"
+				{
+					"value"	"delete"
+				}
+				"max health additive penalty"
+				{
+					"value" "delete"
+				}
+				"sanguisuge_nooverheal"
+				{
+					"attribute_class"	"sanguisuge_nooverheal"
+					"value"	"1"
+				}
+				"max health additive bonus"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value" "+15"
+				}
+				"mod_cloak_no_damage_reduction"
+				{
+					"attribute_class"	"mod_cloak_no_damage_reduction"
+					"value" "1"
+				}
+				"cannot disguise"
+				{
+					"attribute_class"	"set_cannot_disguise"
+					"value" "1"
+				}
+				"special taunt"
+				{
+					"attribute_class"	"special_taunt"
+					"value" "1"
+				}
+			}
+		}
 		"525" // The Diamondback
 		{
 			"attributes"

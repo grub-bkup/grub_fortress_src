@@ -286,6 +286,28 @@ void CTFKnife::PrimaryAttack( void )
 			pPlayer->m_Shared.HealthKitPickupEffects( iDeltaHealth );
 		}
 	}
+
+	int iSanguisuge_NoOverheal = 0;
+	CALL_ATTRIB_HOOK_INT( iSanguisuge_NoOverheal, sanguisuge_nooverheal );
+	if ( bSuccessfulBackstab && iSanguisuge_NoOverheal > 0 )
+	{
+		// Our health cap is 3x our default maximum health cap. This is so high to make up for
+		// the fact that our default is lowered by equipping the weapon.
+		int iBaseMaxHealth = ( pPlayer->GetMaxHealth() - pPlayer->GetRuneHealthBonus() ),
+			iNewHealth = MIN( pPlayer->GetHealth() + iBackstabVictimHealth, iBaseMaxHealth ),
+			iDeltaHealth = iNewHealth - pPlayer->GetHealth();
+
+		if ( TFGameRules() && TFGameRules()->IsPowerupMode() && ( nBackStabVictimRuneType == RUNE_REFLECT ) )
+		{
+			iDeltaHealth = 0;
+		}
+
+		if ( iDeltaHealth > 0 )
+		{
+			pPlayer->TakeHealth(iDeltaHealth, DMG_IGNORE_MAXHEALTH );
+			pPlayer->m_Shared.HealthKitPickupEffects( iDeltaHealth );
+		}
+	}
 #endif // GAME_DLL
 }
 

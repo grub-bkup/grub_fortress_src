@@ -14,8 +14,8 @@ struct EntityWhiteList_t
 	const char *pszEntName;
 };
 
-ConVar bf_teaserprops("bf_teaserprops", "1", FCVAR_REPLICATED, "Enable teaser props on mapspawn.");
-ConVar bf_teaserprops_type("bf_teaserprops_type", "mvm", FCVAR_REPLICATED, "Which teaser you want to spawn with?");
+ConVar bf_teaserprops("bf_teaserprops", "0", FCVAR_REPLICATED || FCVAR_DEVELOPMENTONLY, "Enable teaser props on mapspawn.");
+ConVar bf_teaserprops_type("bf_teaserprops_type", "mvm", FCVAR_REPLICATED || FCVAR_DEVELOPMENTONLY, "Which teaser you want to spawn with?");
 
 // limit the entities that can be created using this method
 EntityWhiteList_t g_szEntityWhiteList[] =
