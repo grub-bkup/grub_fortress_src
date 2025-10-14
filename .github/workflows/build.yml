@@ -202,8 +202,14 @@ jobs:
             for /r "game" %%f in (*.pdb) do del /q "%%f"
         shell: cmd
 
+      - name: Upload Binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}-binaries
+          path: game/grub_fortress/bin
+
       - name: Upload Game Folder
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.artifact_name }}
-          path: game/grub_fortress/bin
+          name: ${{ matrix.artifact_name }}-game
+          path: game/
