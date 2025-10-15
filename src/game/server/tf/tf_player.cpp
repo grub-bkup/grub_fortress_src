@@ -12579,6 +12579,13 @@ void CTFPlayer::Event_KilledOther( CBaseEntity *pVictim, const CTakeDamageInfo &
 				// Perceptually, people seem to think the effect is shorter than the stated time, so we cheat by adding a tad more for that
 				m_Shared.AddCond( TF_COND_ENERGY_BUFF, iMiniCritBoost + 1 );
 			}
+			int iSpeedBoost = 0;
+			CALL_ATTRIB_HOOK_INT_ON_OTHER( pWeapon, iSpeedBoost, add_onkill_speedboost_time );
+			if ( iSpeedBoost )
+			{
+				// Perceptually, people seem to think the effect is shorter than the stated time, so we cheat by adding a tad more for that
+				m_Shared.AddCond( TF_COND_SPEED_BOOST, iSpeedBoost + 1 );
+			}
 		}
 
 		// Check for CP_Foundry achievements

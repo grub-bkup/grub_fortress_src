@@ -263,6 +263,17 @@ not sure if it should be used as a weapon"
 			"stored_as_integer"	"1"
 			"effect_type"	"negative"
 		}
+		"5008"
+		{
+			"name"	"speedboost on kill"
+			"attribute_class"	"add_onkill_speedboost_time"
+			"description_string"	"#Attrib_SpeedBoost_OnKill"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"positive"
+			"armory_desc"	"on_kill"
+			"stored_as_integer"	"0"
+		}
 	}
 	"items"
 	{

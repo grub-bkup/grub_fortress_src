@@ -153,6 +153,36 @@
 				"demoman"				"primary"
 			}
 		}
+		"171" // The Tribalman's Shiv
+		{
+			"attributes"
+			{
+				"bleeding duration"
+				{
+					"value" "delete"
+				}
+				"bleeding duration"
+				{
+					"attribute_class"	"bleeding_duration"
+					"value" "3"
+				}
+				"speed_boost_on_hit"
+				{
+					"attribute_class"	"speed_boost_on_hit"
+					"value"	"1.5"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.5"
+				}
+				"single wep deploy time decreased"
+				{
+					"attribute_class"	"mult_single_wep_deploy_time"
+					"value"	"0.75"
+				}
+			}
+		}
 		"264" // Frying Pan (yes)
 		{
 			"used_by_classes"
