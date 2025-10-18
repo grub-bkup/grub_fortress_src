@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "8870"
-	"mapversion" "260"
+	"mapversion" "261"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -14,7 +14,7 @@ viewsettings
 	"bSnapToGrid" "1"
 	"bShowGrid" "1"
 	"bShowLogicalGrid" "0"
-	"nGridSpacing" "8"
+	"nGridSpacing" "2"
 }
 palette_plus
 {
@@ -89,7 +89,7 @@ bgimages_plus
 world
 {
 	"id" "1"
-	"mapversion" "260"
+	"mapversion" "261"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -20829,7 +20829,7 @@ entity
 	"Negated" "Allow entities that match criteria"
 	"targetname" "filter_red"
 	"TeamNum" "2"
-	"origin" "440 720 117.095"
+	"origin" "440 720 114.831"
 	editor
 	{
 		"color" "220 220 220"
@@ -20846,7 +20846,7 @@ entity
 	"Negated" "Allow entities that match criteria"
 	"targetname" "filter_blu"
 	"TeamNum" "3"
-	"origin" "440 704 117.095"
+	"origin" "440 704 114.831"
 	editor
 	{
 		"color" "220 220 220"
@@ -23644,8 +23644,9 @@ entity
 		"OnMultiNewRound" "ctf_gamerulesSetStalemateOnTimelimit10-1"
 		"OnMultiNewRound" "ctf_gamerulesSetRedTeamGoalStringSteal the Intelligence Briefcase from the enemy base.0-1"
 		"OnMultiNewRound" "ctf_gamerulesSetBlueTeamGoalStringSteal the Intelligence Briefcase from the enemy base.0-1"
+		"OnMapSpawn" "tonemapSetBloomScale0.30-1"
 	}
-	"origin" "440 720 106.264"
+	"origin" "440 720 104"
 	editor
 	{
 		"color" "220 30 220"
@@ -23662,7 +23663,7 @@ entity
 	"ctf_overtime" "1"
 	"ropes_holiday_lights_allowed" "1"
 	"targetname" "ctf_gamerules"
-	"origin" "440 704 106.264"
+	"origin" "440 704 104"
 	editor
 	{
 		"color" "220 30 220"
@@ -32917,6 +32918,27 @@ entity
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
 		"logicalpos" "[0 1000]"
+	}
+}
+entity
+{
+	"id" "24898"
+	"classname" "env_tonemap_controller"
+	"targetname" "tonemap"
+	connections
+	{
+		"OnMultiNewRound" "ctf_gamerulesSetStalemateOnTimelimit10-1"
+		"OnMultiNewRound" "ctf_gamerulesSetRedTeamGoalStringSteal the Intelligence Briefcase from the enemy base.0-1"
+		"OnMultiNewRound" "ctf_gamerulesSetBlueTeamGoalStringSteal the Intelligence Briefcase from the enemy base.0-1"
+	}
+	"origin" "440 720 88"
+	editor
+	{
+		"color" "220 30 220"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"comments" "You only need one logic_auto. If you already have one copy it's outputs here."
+		"logicalpos" "[0 -11768]"
 	}
 }
 cameras

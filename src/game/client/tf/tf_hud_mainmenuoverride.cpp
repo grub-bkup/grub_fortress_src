@@ -94,7 +94,7 @@ void cc_promotional_codes_button_changed(IConVar* pConVar, const char* pOldStrin
 		((CHudMainMenuOverride*)pMMOverride)->UpdatePromotionalCodes();
 	}
 }
-ConVar cl_promotional_codes_button_show("cl_promotional_codes_button_show", "1", FCVAR_ARCHIVE, "Toggles the 'View Promotional Codes' button in the main menu for players that have used the 'RIFT Well Spun Hat Claim Code'.", cc_promotional_codes_button_changed);
+ConVar cl_promotional_codes_button_show("cl_promotional_codes_button_show", "0", FCVAR_ARCHIVE, "Toggles the 'View Promotional Codes' button in the main menu for players that have used the 'RIFT Well Spun Hat Claim Code'.", cc_promotional_codes_button_changed);
 
 extern bool Training_IsComplete();
 

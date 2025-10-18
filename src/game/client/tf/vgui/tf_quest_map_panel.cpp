@@ -1226,7 +1226,7 @@ void CQuestMapPanel::GoToCurrentQuest()
 //
 // Debugging functions
 //
-
+/*
 CON_COMMAND( show_quest_log, "Show the quest map panel" )
 {
 	if ( GetQuestMapPanel()->IsVisible() )
@@ -1249,3 +1249,4 @@ CON_COMMAND( show_quest_log, "Show the quest map panel" )
 		}
 	}
 }
+*/
