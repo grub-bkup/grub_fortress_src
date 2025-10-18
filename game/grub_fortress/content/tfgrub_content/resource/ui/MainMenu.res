@@ -169,7 +169,7 @@
 		"fieldName"		"Version"
 		"xpos"			"c-290"
 		"ypos"			"75"
-		"zpos"			"1"
+		"zpos"			"10"
 		"wide"			"600"
 		"tall"			"24"
 		"autoResize"	"0"
@@ -3371,5 +3371,25 @@
 				"scaleImage"	"1"
 			}				
 		}	
+	}
+	"Version_Bottom"
+	{
+		"ControlName"	"Label"
+		"fieldName"		"Version"
+		"font" 			"HudFontMedium"
+		"xpos"			"r60"
+		"ypos"			"r40"
+		"zpos"			"10"
+		"wide"			"600"
+		"tall"			"24"
+		"dulltext"		"1"
+		"autoResize"	"0"
+		"pinCorner"		"0"
+		"visible"		"0" // Enable After Alpha/Beta
+		"enabled"		"0" // Enable After Alpha/Beta
+		"labelText"		"#TFGRUB_Version_Short"
+		"textAlignment"	"west"
+		"dulltext"		"0"
+		"brighttext"	"1"
 	}
 }

@@ -9,16 +9,16 @@
 	}
 	"QuickplayButton"
 	{
-		"label" "#MMenu_PlayMultiplayer" 
+		"label" "#MMenu_BrowseServers" 
 		"command" "OpenServerBrowser"
 		"subimage" "glyph_multiplayer"
 		"OnlyAtMenu" "1"
 	}
 	"QuickplayChangeButton"
 	{
-		"label" "#MMenu_NewGame" 
+		"label" "#MMenu_BrowseServers" 
 		"command" "OpenServerBrowser"
-		"subimage" "glyph_server"
+		"subimage" "glyph_multiplayer"
 		"OnlyInGame" "1"
 	}
 	"PlayPVEButton"

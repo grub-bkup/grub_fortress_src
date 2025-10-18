@@ -1157,3 +1157,21 @@ const char *CTFProjectile_Cleaver::GetTrailParticleName( void )
 }
 
 #endif // GAME_DLL
+
+float CTFJar::InternalGetEffectBarRechargeTime(void)
+{
+	float flRechargeTime = 0;
+	CALL_ATTRIB_HOOK_FLOAT(flRechargeTime, throwable_recharge_time);
+	if (flRechargeTime)
+		return flRechargeTime;
+	return 20.1f; // default
+}
+
+float CTFCleaver::InternalGetEffectBarRechargeTime(void)
+{
+	float flRechargeTime = 0;
+	CALL_ATTRIB_HOOK_FLOAT(flRechargeTime, throwable_recharge_time);
+	if (flRechargeTime)
+		return flRechargeTime;
+	return 5.1f; // default
+}

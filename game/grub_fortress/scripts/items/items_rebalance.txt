@@ -46,6 +46,20 @@
 				}
 			}
 		}
+		"weapon_jarate" // Jarate
+		{
+			"static_attrs"
+			{
+				"throwable recharge time"				"30"
+			}
+		}
+		"weapon_madmilk" // Mad Milk
+		{
+			"static_attrs"
+			{
+				"throwable recharge time"				"30"
+			}
+		}
 		"weapon_ambassador" // The Ambassador
 		{
 			"static_attrs"

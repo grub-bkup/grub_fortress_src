@@ -56,7 +56,7 @@ public:
 	virtual CBaseEntity *FireJar( CTFPlayer *pPlayer );
 	virtual void		TossJarThink( void );
 
-	virtual float		InternalGetEffectBarRechargeTime( void ) { return 20.1; }
+	virtual float		InternalGetEffectBarRechargeTime( void );
 
 	virtual const char*			GetEffectLabelText( void ) { return "#TF_JAR"; }
 
@@ -117,7 +117,7 @@ public:
 
 	virtual const char*			GetEffectLabelText( void ) { return "#TF_CLEAVER"; }
 
-	virtual float		InternalGetEffectBarRechargeTime( void ) { return 5.1; }
+	virtual float		InternalGetEffectBarRechargeTime( void );
 
 #ifdef GAME_DLL
 	virtual const AngularImpulse GetAngularImpulse( void ){ return AngularImpulse( 0, 500, 0 ); }
