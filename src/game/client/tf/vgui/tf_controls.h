@@ -273,6 +273,7 @@ private:
 	virtual void OnClose();
 	virtual void OnKeyCodeTyped(vgui::KeyCode code);
 	virtual void OnKeyCodePressed(vgui::KeyCode code);
+	virtual void OnThink();
 
 private:
 	CInfoDescription	*m_pDescription;

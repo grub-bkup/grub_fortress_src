@@ -3044,6 +3044,7 @@ void CTFCreateServerDialog::ApplySchemeSettings(vgui::IScheme* pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
+	CreateControls();
 	LoadControlSettings("resource/ui/TFModServerDialog.res");
 	m_pPageOne->SetFirstColumnWidth(0);
 	m_pPageTwo->SetFirstColumnWidth(0);
@@ -3051,8 +3052,6 @@ void CTFCreateServerDialog::ApplySchemeSettings(vgui::IScheme* pScheme)
 
 	SetOKButtonVisible(false);
 	SetCancelButtonVisible(false);
-
-	CreateControls();
 }
 
 
@@ -3098,51 +3097,49 @@ void CTFCreateServerDialog::OnCommand(const char* command)
 		if ( m_pDescription )
 		{
 			m_pDescription->WriteToConfig();
-		}
-		CScriptObject* pMapInfoObj = m_pDescription->FindObject("cl_map");
-		if ( pMapInfoObj )
-		{
-			CScriptListItem *pItem = pMapInfoObj->pListItems;
-
-			if ( pItem )
+			CScriptObject* pMapInfoObj = m_pDescription->FindObject("cl_map");
+			if ( pMapInfoObj )
 			{
-				while ( pItem )
+				CScriptListItem *pItem = pMapInfoObj->pListItems;
+
+				if ( pItem )
 				{
-					// This is horrible.
-					if (!Q_stricmp(pItem->szValue, pMapInfoObj->curValue))
+					while ( pItem )
 					{
-						if(!Q_stricmp(pItem->szItemText, "#GameUI_RandomMap"))
+						// This is horrible.
+						if (!Q_stricmp(pItem->szValue, pMapInfoObj->curValue))
 						{
-							CScriptListItem *p;
-							int c = 0;
-							p = pMapInfoObj->pListItems;
-							while ( p )
+							if(!Q_stricmp(pItem->szItemText, "#GameUI_RandomMap"))
 							{
-								p = p->pNext;
-								c++;
-							}
+								CScriptListItem *p;
+								int c = 0;
+								p = pMapInfoObj->pListItems;
+								while ( p )
+								{
+									p = p->pNext;
+									c++;
+								}
 
-							int v = RandomInt(1, c); // Ignore the RandomMap option
-							p = pMapInfoObj->pListItems;
-							c = 0;
-							while ( p )
-							{
-								if(c == v)
-									break;
-								p = p->pNext;
-								c++;
+								int v = RandomInt(1, c); // Ignore the RandomMap option
+								p = pMapInfoObj->pListItems;
+								c = 0;
+								while ( p )
+								{
+									if(c == v)
+										break;
+									p = p->pNext;
+									c++;
+								}
+								pItem = p;
 							}
-							pItem = p;
+							break;
 						}
-						break;
+
+						pItem = pItem->pNext;
 					}
-
-					pItem = pItem->pNext;
+					engine->ClientCmd_Unrestricted(CFmtStr("map %s", pItem->szItemText));
 				}
-
-				engine->ClientCmd_Unrestricted(CFmtStr("map %s", pItem->szItemText));
 			}
-
 		}
 		OnClose();
 		return;
@@ -3317,7 +3314,7 @@ void CTFCreateServerDialog::CreateControls()
 	pObj = m_pDescription->pObjList;
 
 	// Build out the maps dropdown
-	CUtlVector < CUtlString > m_vecMaps;
+	CUtlVector< CUtlString > m_vecMaps;
 	FileFindHandle_t mapHandle;
 	const char* pPopFileName = filesystem->FindFirstEx( "maps/*.bsp", "GAME", &mapHandle );
 
@@ -3383,7 +3380,7 @@ void CTFCreateServerDialog::CreateControls()
 			continue;
 		}
 
-		pCtrl = new mpcontrol_t( objParent, "mpcontrol_t" );
+		pCtrl = new mpcontrol_t( objParent, pObj->cvarname );
 		pCtrl->type = pObj->type;
 
 		// Force it to invalidate scheme now, so we can change color afterwards and have it persist
@@ -3392,7 +3389,7 @@ void CTFCreateServerDialog::CreateControls()
 		switch ( pCtrl->type )
 		{
 		case O_BOOL:
-			pBox = new CheckButton( pCtrl, "DescCheckButton", pObj->prompt );
+			pBox = new CheckButton( pCtrl, pObj->cvarname, pObj->prompt );
 			pBox->SetSelected( pObj->fdefValue != 0.0f ? true : false );
 
 			pCtrl->pControl = (Panel *)pBox;
@@ -3410,7 +3407,7 @@ void CTFCreateServerDialog::CreateControls()
 			break;
 		case O_STRING:
 		case O_NUMBER:
-			pEdit = new TextEntry( pCtrl, "DescTextEntry");
+			pEdit = new TextEntry( pCtrl, pObj->cvarname);
 			pEdit->InsertString(pObj->defValue);
 			pCtrl->pControl = (Panel *)pEdit;
 			pEdit->SetFont( hTextFont );
@@ -3420,7 +3417,7 @@ void CTFCreateServerDialog::CreateControls()
 			break;
 		case O_LIST:
 			{
-			pCombo = new ComboBox( pCtrl, "DescComboBox", 5, false );
+			pCombo = new ComboBox( pCtrl, pObj->cvarname, 5, false );
 
 			// track which row matches the current value
 			int iRow = -1;
@@ -3444,11 +3441,11 @@ void CTFCreateServerDialog::CreateControls()
 		}
 			break;
 		case O_SLIDER:
-			pSlider = new CCvarSlider( pCtrl, "DescSlider", "Test", pObj->fMin, pObj->fMax, pObj->cvarname, false );
+			pSlider = new CCvarSlider( pCtrl, pObj->cvarname, "Test", pObj->fMin, pObj->fMax, pObj->cvarname, false );
 			pCtrl->pControl = (Panel *)pSlider;
 			break;
 		case O_BUTTON:
-			pButton = new CExButton( pCtrl, "DescButton", pObj->prompt, this, pObj->defValue );
+			pButton = new CExButton( pCtrl, pObj->cvarname, pObj->prompt, this, pObj->defValue );
 			pButton->SetFont( hTextFont );
 			pCtrl->pControl = (Panel *)pButton;
 			break;
@@ -3461,7 +3458,7 @@ void CTFCreateServerDialog::CreateControls()
 
 		if ( pCtrl->type != O_BOOL && pCtrl->type != O_BUTTON )
 		{
-			pCtrl->pPrompt = new vgui::Label( pCtrl, "DescLabel", "" );
+			pCtrl->pPrompt = new vgui::Label( pCtrl, CFmtStr( "%s_DescLabel", pObj->cvarname ), "" );
 			pCtrl->pPrompt->SetContentAlignment( vgui::Label::a_west );
 			pCtrl->pPrompt->SetTextInset( 5, 0 );
 			pCtrl->pPrompt->SetText( pObj->prompt );
@@ -3587,4 +3584,58 @@ void CTFCreateServerDialog::Deploy(void)
 	vgui::surface()->GetWorkspaceBounds(x, y, ww, wt);
 	GetSize(wide, tall);
 	SetPos(x + ((ww - wide) / 2), y + ((wt - tall) / 2));
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Updates the map preview image
+//-----------------------------------------------------------------------------
+void CTFCreateServerDialog::OnThink() 
+{
+	// This is not as effecient as I wanted it to be.
+	// Ideally I would want some event to hook onto, but I have no idea what i'm doing.
+
+	//Msg("Think Enter\n");
+	GatherCurrentValues(); // If this is not called, we would be reading old values.
+	if ( m_pDescription )
+	{
+		//Msg("m_pDescription exists\n");
+		CScriptObject* pMapInfoObj = m_pDescription->FindObject("cl_map");
+		if (pMapInfoObj)
+		{
+			//Msg("pMapInfoObj exists\n");
+			ImagePanel *pImagePanel = (ImagePanel*) FindChildByName( "map_preview_img", true );
+			if (pImagePanel)
+			{
+				const char *szMapName;
+				CScriptListItem *pItem = pMapInfoObj->pListItems;
+				if ( pItem )
+				{
+					while ( pItem )
+					{
+						if (!Q_stricmp(pItem->szValue, pMapInfoObj->curValue))
+						{
+							szMapName = pItem->szItemText;
+							break;
+						}
+
+						pItem = pItem->pNext;
+					}
+				}
+				//Msg("Current Selection: %s\n", name);
+				const char* szMapImage = CFmtStr("vgui/maps/menu_photos_%s", szMapName);
+
+				IMaterial *pMapMaterial = materials->FindMaterial( szMapImage, TEXTURE_GROUP_VGUI, false );
+				if( pMapMaterial && !IsErrorMaterial( pMapMaterial ) )
+				{
+					pImagePanel->SetImage(CFmtStr("maps/menu_thumb_%s", szMapName));
+				}
+				else
+				{ 
+					pImagePanel->SetImage(CFmtStr("maps/menu_thumb_default", szMapName));
+				}
+			}
+		}
+	}
+	//Msg("Think Exit\n");
+	BaseClass::OnThink();
 }

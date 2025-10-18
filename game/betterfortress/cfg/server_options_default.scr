@@ -36,7 +36,59 @@ DESCRIPTION INFO_OPTIONS
 {
 	"category1"
 	{
-		"#TF_OptionCategory_Communication"
+		"SERVER PROFILE"
+		{ CATEGORY }
+	}
+	
+	"hostname"
+	{
+		"#GameUI_ServerName"
+		{ STRING }
+		{ "Better Fortress 2" }
+	}
+	
+	"sv_tags"
+	{
+		"TAGS"
+		{ STRING }
+		{ " " }
+	}
+	
+	"category2"
+	{
+		"SERVER SLOTS AND BOTS"
+		{ CATEGORY }
+	}
+	
+	"maxplayers"
+	{
+		"#GameUI_MaxPlayers"
+		{ STRING }
+		{ 32 }
+	}
+	
+	"tf_bot_quota"
+	{
+		"MAX BOTS:"
+		{ STRING }
+		{ 0 }
+	}
+	
+	"tf_bot_difficulty"
+	{
+		"#TF_Bot_Difficulty"
+		{ LIST 
+			"#TF_Bot_Difficulty0" "0"
+			"#TF_Bot_Difficulty1" "1"
+			"#TF_Bot_Difficulty2" "2"
+			"#TF_Bot_Difficulty3" "3"
+		}
+		{ 0 }
+	}
+	
+	"category3"
+	{
+		"#GameUI_Map"
 		{ CATEGORY }
 	}
 	
@@ -47,6 +99,18 @@ DESCRIPTION INFO_OPTIONS
 			"#GameUI_RandomMap"					"-1"
 		}
 		{ "0" }
+	}
+	
+	"map_preview"
+	{
+		" "
+		{ CATEGORY }
+	}
+	
+	"category4"
+	{
+		"#IT_OtherOptions"
+		{ CATEGORY }
 	}
 	
 	"sv_use_steam_networking"
@@ -61,7 +125,7 @@ DESCRIPTION INFO_OPTIONS
 	
 	"hide_server"
 	{
-		"#Server_Visibility_Global"
+		"HIDE SERVER"
 		{ BOOL }
 		{ "0" }
 	}
