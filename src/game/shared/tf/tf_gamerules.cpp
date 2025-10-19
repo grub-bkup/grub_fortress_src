@@ -7396,32 +7396,37 @@ float CTFGameRules::ApplyOnDamageAliveModifyRules( const CTakeDamageInfo &info, 
 			// Reduce damage taken if we have recently feigned death.
 			if ( pVictim->m_Shared.InCond( TF_COND_FEIGN_DEATH ) || pVictim->m_Shared.IsFeignDeathReady() )
 			{
-				// Damage reduction is proportional to cloak remaining (60%->20%)
-				float flDamageReduction = RemapValClamped( pVictim->m_Shared.GetSpyCloakMeter(), 50.0f, 0.0f, tf_feign_death_damage_scale.GetFloat(), tf_stealth_damage_reduction.GetFloat() );
-
-				// On Activate Reduce Remaining Cloak by 50%
-				if ( pVictim->m_Shared.IsFeignDeathReady() )
+				float bNoDamageReduction = 0;
+				CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pVictim, bNoDamageReduction, mod_cloak_no_damage_reduction);
+				if (!bNoDamageReduction)
 				{
-					flDamageReduction = tf_feign_death_activate_damage_scale.GetFloat();
-				}
-				outParams.bSendPreFeignDamage = true;
+					// Damage reduction is proportional to cloak remaining (60%->20%)
+					float flDamageReduction = RemapValClamped( pVictim->m_Shared.GetSpyCloakMeter(), 50.0f, 0.0f, tf_feign_death_damage_scale.GetFloat(), tf_stealth_damage_reduction.GetFloat() );
 
-				float flBeforeflRealDamage = flRealDamage;
-
-				flRealDamage *= flDamageReduction;
-
-				CTFWeaponInvis *pWatch = (CTFWeaponInvis *) pVictim->Weapon_OwnsThisID( TF_WEAPON_INVIS );
-				PotentiallyDamageMitigatedEvent( pVictim, pVictim, pWatch, flBeforeflRealDamage, flRealDamage );
-
-				// Original damage would've killed the player, but the reduced damage wont
-				if ( flBeforeflRealDamage >= pVictim->GetHealth() && flRealDamage < pVictim->GetHealth() )
-				{
-					IGameEvent *pEvent = gameeventmanager->CreateEvent( "deadringer_cheat_death" );
-					if ( pEvent )
+					// On Activate Reduce Remaining Cloak by 50%
+					if ( pVictim->m_Shared.IsFeignDeathReady() )
 					{
-						pEvent->SetInt( "spy", pVictim->GetUserID() );
-						pEvent->SetInt( "attacker", pTFAttacker ? pTFAttacker->GetUserID() : -1 );
-						gameeventmanager->FireEvent( pEvent, true );
+						flDamageReduction = tf_feign_death_activate_damage_scale.GetFloat();
+					}
+					outParams.bSendPreFeignDamage = true;
+
+					float flBeforeflRealDamage = flRealDamage;
+
+					flRealDamage *= flDamageReduction;
+
+					CTFWeaponInvis *pWatch = (CTFWeaponInvis *) pVictim->Weapon_OwnsThisID( TF_WEAPON_INVIS );
+					PotentiallyDamageMitigatedEvent( pVictim, pVictim, pWatch, flBeforeflRealDamage, flRealDamage );
+
+					// Original damage would've killed the player, but the reduced damage wont
+					if ( flBeforeflRealDamage >= pVictim->GetHealth() && flRealDamage < pVictim->GetHealth() )
+					{
+						IGameEvent *pEvent = gameeventmanager->CreateEvent( "deadringer_cheat_death" );
+						if ( pEvent )
+						{
+							pEvent->SetInt( "spy", pVictim->GetUserID() );
+							pEvent->SetInt( "attacker", pTFAttacker ? pTFAttacker->GetUserID() : -1 );
+							gameeventmanager->FireEvent( pEvent, true );
+						}
 					}
 				}
 			}

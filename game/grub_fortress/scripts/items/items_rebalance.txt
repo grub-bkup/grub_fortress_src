@@ -243,7 +243,7 @@
 				}
 			}
 		}
-		"356"
+		"356" // Conniver's Kunai
 		{
 			"attributes"
 			{
@@ -349,20 +349,30 @@
 					"attribute_class"	"mult_player_movespeed"
 					"value"				"0.90"
 				}
-				"boost on damage"
-				{
-					"attribute_class"	"boost_on_damage"
-					"value"				"1"
-				}
-				"hype resets on jump"
-				{
-					"attribute_class"	"hype_resets_on_jump"
-					"value"				"25"
-				}
+//				"boost on damage"
+//				{
+//					"attribute_class"	"boost_on_damage"
+//					"value"				"1"
+//				}
+//				"hype resets on jump"
+//				{
+//					"attribute_class"	"hype_resets_on_jump"
+//					"value"				"50"
+//				}
 				"clip size penalty"
 				{
 					"attribute_class"	"mult_clipsize"
 					"value"				"0.66"
+				}
+//				"lose hype on take damage"
+//				{
+//					"attribute_class"	"lose_hype_on_take_damage"
+//					"value"	"1"
+//				}
+				"speed_boost_on_hit"
+				{
+					"attribute_class"	"speed_boost_on_hit"
+					"value"	"2"
 				}
 			}
 		}
