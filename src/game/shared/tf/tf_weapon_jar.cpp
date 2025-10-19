@@ -482,7 +482,7 @@ void CTFProjectile_Jar::Explode( trace_t *pTrace, int bitsDamageType )
 	}
 
 	CTFPlayer *pThrower = ToTFPlayer( GetThrower() );
-	JarExplode( entindex(), pThrower, GetOriginalLauncher(), GetLauncher(), GetAbsOrigin(), GetTeamNumber(), GetDamageRadius(), GetEffectCondition(), 10.f, GetImpactEffect(), GetExplodeSound() );
+	JarExplode( entindex(), pThrower, GetOriginalLauncher(), GetLauncher(), GetAbsOrigin(), GetTeamNumber(), GetDamageRadius(), GetEffectCondition(), 5.f, GetImpactEffect(), GetExplodeSound() );
 
 	// Debug radius draw.
 	//DrawRadius( GetDamageRadius() );

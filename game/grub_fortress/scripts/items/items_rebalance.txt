@@ -155,6 +155,27 @@
 				}
 			}
 		}
+		"weapon_bazaar_sniper" // The Bazaar Bargain
+		{
+			"attributes"
+			{
+				"mult sniper charge penalty DISPLAY ONLY"
+				{
+					"attribute_class"	"mult_sniper_charge_base_dummy"
+					"value"				"1.5"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"	"0.90"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"	"1.25"
+				}
+			}
+		}
 	}
 	"items"
 	{
