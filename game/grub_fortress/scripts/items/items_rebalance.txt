@@ -206,6 +206,25 @@
 	"items"
 	{
 		// Rebalances 
+		"41" // Natascha	
+		{
+			"attributes"
+			{
+				"slow enemy on hit"
+				{
+					"value"					"delete"
+				}
+				"spunup_damage_resistance"
+				{
+					"value"					"delete"
+				}
+				"heal on hit for rapidfire"
+				{
+					"attribute_class"		"add_onhit_addhealth"
+					"value"					"4"
+				}
+			}
+		}
 		"133" // The Gunboats
 		{
 			"used_by_classes"

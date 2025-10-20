@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "8870"
-	"mapversion" "272"
+	"mapversion" "273"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -89,7 +89,7 @@ bgimages_plus
 world
 {
 	"id" "1"
-	"mapversion" "272"
+	"mapversion" "273"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -32801,7 +32801,7 @@ entity
 	"classname" "func_regenerate"
 	"associatedmodel" "prop_locker_blu_2"
 	"StartDisabled" "0"
-	"TeamNum" "2"
+	"TeamNum" "3"
 	solid
 	{
 		"id" "23425"
