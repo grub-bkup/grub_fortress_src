@@ -223,6 +223,11 @@
 					"attribute_class"		"add_onhit_addhealth"
 					"value"					"5"
 				}
+				"reduced_healing_from_medics"
+				{
+					"attribute_class"	"mult_healing_from_medics"
+					"value"				"0.5"
+				}
 			}
 		}
 		"133" // The Gunboats

@@ -1860,7 +1860,7 @@ void CTFPlayerShared::OnConditionAdded( ETFCond eCond )
 		OnAddHalloweenHellHeal();
 		break;
 
-
+	case TF_COND_SPEED_BOOST_WATCH:				OnAddWatchSpeedBoost( false );		break;
 	default:
 		break;
 	}
@@ -2204,6 +2204,7 @@ void CTFPlayerShared::OnConditionRemoved( ETFCond eCond )
 		OnRemoveHalloweenHellHeal();
 		break;
 
+	case TF_COND_SPEED_BOOST_WATCH:					OnRemoveWatchSpeedBoost( false );		break;
 
 	default:
 		break;
@@ -4405,7 +4406,21 @@ void CTFPlayerShared::OnRemoveSpeedBoost( bool IsNonCombat )
 	m_pOuter->TeamFortress_SetSpeed();
 #endif // CLIENT_DLL
 }
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFPlayerShared::OnAddWatchSpeedBoost( bool IsNonCombat )
+{
+	m_pOuter->TeamFortress_SetSpeed();
+}
 
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTFPlayerShared::OnRemoveWatchSpeedBoost( bool IsNonCombat )
+{
+	m_pOuter->TeamFortress_SetSpeed();
+}
 //-----------------------------------------------------------------------------
 // Purpose: Applied to bots
 //-----------------------------------------------------------------------------
@@ -8005,7 +8020,7 @@ void CTFPlayerShared::InvisibilityThink( void )
 		{
 			if ( m_flCloakMeter < 1.f )
 			{
-				RemoveCond( TF_COND_SPEED_BOOST );
+				RemoveCond( TF_COND_SPEED_BOOST_WATCH );
 			}
 		}
 	}
@@ -10896,6 +10911,15 @@ float CTFPlayer::TeamFortress_CalculateMaxSpeed( bool bIgnoreSpecialAbility /*= 
 
 #ifdef GAME_DLL
 	if ( m_Shared.InCond( TF_COND_SPEED_BOOST ) )
+	{
+		// We only allow our speed boost to apply if we have a base speed to work with. If we're supposed
+		// to be stationary for whatever reason we don't allow a speed to allow us to move.
+		if ( maxfbspeed > 0.0f )
+		{
+			maxfbspeed += MIN( maxfbspeed * 0.4f, tf_whip_speed_increase.GetFloat() );
+		}
+	}
+	if ( m_Shared.InCond( TF_COND_SPEED_BOOST_WATCH ) )
 	{
 		// We only allow our speed boost to apply if we have a base speed to work with. If we're supposed
 		// to be stationary for whatever reason we don't allow a speed to allow us to move.

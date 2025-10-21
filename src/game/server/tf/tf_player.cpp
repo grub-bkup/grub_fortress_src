@@ -5413,9 +5413,9 @@ void CTFPlayer::Regenerate( bool bRefillHealthAndAmmo /*= true*/ )
 			m_Shared.RemoveCond( TF_COND_PLAGUE );
 		}
 
-		if ( m_Shared.InCond( TF_COND_SPEED_BOOST ) )
+		if ( m_Shared.InCond( TF_COND_SPEED_BOOST_WATCH ) )
 		{
-			m_Shared.RemoveCond( TF_COND_SPEED_BOOST );
+			m_Shared.RemoveCond( TF_COND_SPEED_BOOST_WATCH );
 		}
 
 		m_Shared.SetSpyCloakMeter( 100.0f );
@@ -17552,9 +17552,9 @@ void CTFPlayer::RemoveInvisibility( void )
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pProvider, bModSpeedBoostOnCloak, mod_speed_boost_on_cloak );
 	if ( bModSpeedBoostOnCloak )
 	{
-		if ( m_Shared.InCond( TF_COND_SPEED_BOOST ) ) // this is here just in case it's needed somehow
+		if ( m_Shared.InCond( TF_COND_SPEED_BOOST_WATCH ) ) // this is here just in case it's needed somehow
 		{
-			m_Shared.RemoveCond( TF_COND_SPEED_BOOST );
+			m_Shared.RemoveCond( TF_COND_SPEED_BOOST_WATCH );
 		}
 	}
 

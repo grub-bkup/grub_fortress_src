@@ -476,7 +476,7 @@ static const char *g_aConditionNames[] =
 	//
 	// ADD NEW ITEMS HERE TO AVOID BREAKING DEMOS
 	//
-
+	"TF_COND_SPEED_BOOST_WATCH",                      // = 131
 	// ******** Keep this block last! ********
 	// Keep experimental conditions below and graduate out of it before shipping
 

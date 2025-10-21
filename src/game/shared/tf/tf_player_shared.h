@@ -819,7 +819,7 @@ private:
 	void OnAddCompetitiveLoser( void );
 	void OnAddCondGas( void );
 	void OnAddRocketPack( void );
-
+	void OnAddWatchSpeedBoost( bool IsNonCombat );
 
 	void OnRemoveZoomed( void );
 	void OnRemoveBurning( void );
@@ -899,6 +899,7 @@ private:
 	void OnRemoveCondGas( void );
 	void OnRemoveRocketPack( void );
 	void OnRemoveBurningPyro( void );
+	void OnRemoveWatchSpeedBoost(bool IsNonCombat);
 	
 
 	// Starting a new trend, putting Add and Remove next to each other
