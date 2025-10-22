@@ -372,6 +372,7 @@
 		}
 		"772" // Baby Face's Blaster
 		{
+			"item_class"	"tf_weapon_scattergun"
 			"attributes"
 			{
 				"move speed penalty"
