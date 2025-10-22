@@ -30,6 +30,7 @@
 #include "tf_shareddefs.h"
 #include "tf_imagepanel.h"
 #endif
+#include "vgui_controls/PropertyDialog.h"
 #include <vgui_controls/Frame.h>
 #include <../common/GameUI/scriptobject.h>
 #include <vgui/KeyCode.h>
@@ -242,6 +243,46 @@ private:
 	vgui::PanelListPanel* m_pListPanel;
 	CTFTextToolTip* m_pToolTip;
 	vgui::EditablePanel* m_pToolTipEmbeddedPanel;
+
+	CPanelAnimationVarAliasType(int, m_iControlW, "control_w", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iControlH, "control_h", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iSliderW, "slider_w", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iSliderH, "slider_h", "0", "proportional_int");
+};
+class CTFCreateServerDialog : public vgui::PropertyDialog
+{
+	DECLARE_CLASS_SIMPLE(CTFCreateServerDialog, vgui::PropertyDialog);
+
+public:
+	CTFCreateServerDialog(vgui::Panel* parent);
+	~CTFCreateServerDialog();
+
+	virtual void	ApplySchemeSettings(vgui::IScheme* pScheme);
+	virtual void	ApplySettings(KeyValues* pResourceData);
+
+	void	Deploy(void);
+
+private:
+
+	void CreateControls();
+	void DestroyControls();
+	void GatherCurrentValues();
+	void SaveValues();
+
+	virtual void OnCommand( const char *command );
+	virtual void OnClose();
+	virtual void OnKeyCodeTyped(vgui::KeyCode code);
+	virtual void OnKeyCodePressed(vgui::KeyCode code);
+	virtual void OnThink();
+
+private:
+	CInfoDescription	*m_pDescription;
+	mpcontrol_t* m_pList;
+	CTFTextToolTip* m_pToolTip;
+	vgui::EditablePanel* m_pToolTipEmbeddedPanel;
+	vgui::PanelListPanel* m_pPageOne;
+	vgui::PanelListPanel* m_pPageTwo;
+	vgui::PanelListPanel* m_pPageThree;
 
 	CPanelAnimationVarAliasType(int, m_iControlW, "control_w", "0", "proportional_int");
 	CPanelAnimationVarAliasType(int, m_iControlH, "control_h", "0", "proportional_int");

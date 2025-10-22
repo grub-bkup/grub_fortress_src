@@ -4549,10 +4549,15 @@ bool CBaseEntity::AcceptInput( const char *szInputName, CBaseEntity *pActivator,
 
 							g_pScriptVM->SetValue( "activator", ( pActivator ) ? ScriptVariant_t( pActivator->GetScriptInstance() ) : SCRIPT_VARIANT_NULL );
 							g_pScriptVM->SetValue( "caller", ( pCaller ) ? ScriptVariant_t( pCaller->GetScriptInstance() ) : SCRIPT_VARIANT_NULL );
+							g_pScriptVM->SetValue( "input_value", Value.String() );
 
 							if( CallScriptFunction( szScriptFunctionName, &functionReturn ) )
 							{
 								bCallInputFunc = functionReturn;
+								// Allow reassignment of activator and caller of the input
+								IScriptVM *pVM = g_pScriptVM;
+								pVM->IfHas<HSCRIPT>		( m_ScriptScope, "activator",	[&](HSCRIPT value) { data.pActivator = ToEnt(value); } );
+								pVM->IfHas<HSCRIPT>		( m_ScriptScope, "caller",		[&](HSCRIPT value) { data.pCaller = ToEnt(value); } );
 							}
 						}
 
@@ -4565,6 +4570,7 @@ bool CBaseEntity::AcceptInput( const char *szInputName, CBaseEntity *pActivator,
 						{
 							g_pScriptVM->ClearValue( "activator" );
 							g_pScriptVM->ClearValue( "caller" );
+							g_pScriptVM->ClearValue( "input_value" );
 						}
 					}
 					else if ( dmap->dataDesc[i].flags & FTYPEDESC_KEY )
@@ -5597,9 +5603,8 @@ HSCRIPT CBaseEntity::ScriptGetModelKeyValues( void )
 		// UNDONE: how does destructor get called on this
 		m_pScriptModelKeyValues = new CScriptKeyValues( pModelKeyValues );
 
-		// UNDONE: who calls ReleaseInstance on this??? Does name need to be unique???
-
 		hScript = g_pScriptVM->RegisterInstance( m_pScriptModelKeyValues );
+		m_pScriptModelKeyValues->m_hScriptInstance = hScript;
 		
 		/* 
 		KeyValues *pParticleEffects = pModelKeyValues->FindKey("Particles");
@@ -6409,10 +6414,8 @@ static ConCommand ent_cancelpendingentfires("ent_cancelpendingentfires", CC_Ent_
 void CC_Ent_Info( const CCommand& args )
 {
 	CBasePlayer *pPlayer = ToBasePlayer( UTIL_GetCommandClient() );
-	if (!pPlayer)
-	{
+	if( !UTIL_HandleCheatCmdForPlayer(pPlayer) ) 
 		return;
-	}
 	
 	if ( args.ArgC() < 2 )
 	{
@@ -6458,7 +6461,7 @@ void CC_Ent_Info( const CCommand& args )
 		}
 	}
 }
-static ConCommand ent_info("ent_info", CC_Ent_Info, "Usage:\n   ent_info <class name>\n", FCVAR_CHEAT);
+static ConCommand ent_info("ent_info", CC_Ent_Info, "Usage:\n   ent_info <class name>\n", FCVAR_NONE);
 
 
 //------------------------------------------------------------------------------
@@ -6468,9 +6471,12 @@ static ConCommand ent_info("ent_info", CC_Ent_Info, "Usage:\n   ent_info <class 
 //------------------------------------------------------------------------------
 void CC_Ent_Messages( const CCommand& args )
 {
+	CBasePlayer *pPlayer = UTIL_GetCommandClient();
+	if( !UTIL_HandleCheatCmdForPlayer(pPlayer) ) 
+		return;
 	SetDebugBits(UTIL_GetCommandClient(),args[1],OVERLAY_MESSAGE_BIT);
 }
-static ConCommand ent_messages("ent_messages", CC_Ent_Messages ,"Toggles input/output message display for the selected entity(ies).  The name of the entity will be displayed as well as any messages that it sends or receives.\n\tArguments:   	{entity_name} / {class_name} / no argument picks what player is looking at", FCVAR_CHEAT);
+static ConCommand ent_messages("ent_messages", CC_Ent_Messages ,"Toggles input/output message display for the selected entity(ies).  The name of the entity will be displayed as well as any messages that it sends or receives.\n\tArguments:   	{entity_name} / {class_name} / no argument picks what player is looking at", FCVAR_NONE);
 
 
 //------------------------------------------------------------------------------
@@ -6480,6 +6486,10 @@ static ConCommand ent_messages("ent_messages", CC_Ent_Messages ,"Toggles input/o
 //------------------------------------------------------------------------------
 void CC_Ent_Pause( void )
 {
+	CBasePlayer *pPlayer = UTIL_GetCommandClient();
+	if( !UTIL_HandleCheatCmdForPlayer(pPlayer) ) 
+		return;
+
 	if (CBaseEntity::Debug_IsPaused())
 	{
 		Msg( "Resuming entity I/O events\n" );
@@ -6491,7 +6501,7 @@ void CC_Ent_Pause( void )
 		CBaseEntity::Debug_Pause(true);
 	}
 }
-static ConCommand ent_pause("ent_pause", CC_Ent_Pause, "Toggles pausing of input/output message processing for entities.  When turned on processing of all message will stop.  Any messages displayed with 'ent_messages' will stop fading and be displayed indefinitely. To step through the messages one by one use 'ent_step'.", FCVAR_CHEAT);
+static ConCommand ent_pause("ent_pause", CC_Ent_Pause, "Toggles pausing of input/output message processing for entities.  When turned on processing of all message will stop.  Any messages displayed with 'ent_messages' will stop fading and be displayed indefinitely. To step through the messages one by one use 'ent_step'.", FCVAR_NONE);
 
 
 //------------------------------------------------------------------------------
