@@ -44,7 +44,7 @@ DESCRIPTION INFO_OPTIONS
 	{
 		"#GameUI_ServerName"
 		{ STRING }
-		{ "Better Fortress 2" }
+		{ "Grub Fortress" }
 	}
 	
 	"sv_tags"
@@ -64,7 +64,7 @@ DESCRIPTION INFO_OPTIONS
 	{
 		"#GameUI_MaxPlayers"
 		{ STRING }
-		{ 32 }
+		{ 24 }
 	}
 	
 	"tf_bot_quota"
@@ -117,8 +117,8 @@ DESCRIPTION INFO_OPTIONS
 	{
 		"#Start_Server_SteamNetworking"
 		{ LIST
-			"#Server_Visibility_Local"			"0"
 			"#Start_Server_SteamNetworking"			"1"
+			"#Server_Visibility_Local"			"0"
 		}
 		{ "0" }
 	}
