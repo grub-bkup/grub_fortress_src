@@ -280,7 +280,7 @@ not sure if it should be used as a weapon"
 			"attribute_class"	"mod_speed_boost_on_cloak"
 			"description_string"	"#Attrib_SpeedBoost_OnCloak"
 			"description_format"	"value_is_additive"
-			"hidden"	"0"
+			"hidden"	"1"
 			"effect_type"	"positive"
 			"stored_as_integer"	"0"
 		}
@@ -292,6 +292,17 @@ not sure if it should be used as a weapon"
 			"description_format"	"value_is_additive_percentage"
 			"hidden"	"0"
 			"effect_type"	"positive"
+		}
+		"5011"
+		{
+			"name"	"set cloak has speed boost"
+			"attribute_class"	"set_weapon_mode"
+			"description_string"	"#Attrib_CloakHasSpeedBoost"
+			"description_format"	"value_is_additive"
+			"hidden"	"0"
+			"effect_type"	"neutral"
+			"armory_desc"	"cloak_type"
+			"stored_as_integer"	"0"
 		}
 	}
 	"items"
@@ -739,7 +750,7 @@ not sure if it should be used as a weapon"
 				"heal teammate on hit"
 				{
 					"attribute_class"	"heal_teammate_on_hit"
-					"value"				"50"
+					"value"				"75"
 				}
 				"single wep deploy time decreased"
 				{
@@ -769,6 +780,11 @@ not sure if it should be used as a weapon"
 			"model_player"				"models/weapons/v_models/v_watch_pocket_spy.mdl"
 			"attributes"
 			{
+				"set cloak has speed boost"
+				{
+					"attribute_class"	"set_weapon_mode"
+					"value"				"3"
+				}
 				"mod_speed_boost_on_cloak"
 				{
 					"attribute_class"	"mod_speed_boost_on_cloak"

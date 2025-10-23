@@ -24,6 +24,7 @@ enum invis_weapontypes_t
 	INVIS_BASE = 0,
 	INVIS_FEIGN_DEATH,
 	INVIS_MOTION_CLOAK,
+	INVIS_SPEED_BOOST,
 };
 
 class CTFWeaponInvis : public CTFWeaponBase
@@ -64,6 +65,7 @@ public:
 	int				GetInvisType( void ) { int iMode = 0; CALL_ATTRIB_HOOK_INT( iMode, set_weapon_mode ); return iMode; };
 	virtual bool	HasFeignDeath( void ) { return (GetInvisType() == INVIS_FEIGN_DEATH); }
 	virtual bool	HasMotionCloak( void ) { return (GetInvisType() == INVIS_MOTION_CLOAK); } 
+	virtual bool	HasSpeedBoostCloak( void ) { return (GetInvisType() == INVIS_SPEED_BOOST); } 
 
 	virtual void	SetFeignDeathState( bool bEnabled );
 	virtual void	SetCloakRates( void );
