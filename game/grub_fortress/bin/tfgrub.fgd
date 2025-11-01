@@ -1,0 +1,181 @@
+@include "base.fgd"
+@include "tf.fgd"
+
+@PointClass base(Targetname, TeamNum, MatchSummary, EnableDisable, Angles) studio("models/player/engineer.mdl") = info_player_teamspawn :
+	"This entity marks the spawn point for Team Fortress players."
+[
+	controlpoint(target_destination) : "Associated Control Point" : : "The team_control_point associated with this spawn. Ownership of control points will control this spawn point's enabled state."
+	
+	SpawnMode(choices) : "Spawn Mode" : 0 : "How the game decides when a player can spawn here.  Triggered mode will only allow players sent via a trigger_player_respawn_override (in which case this spawn must be named, and match the trigger)." =
+	[
+		0 : "Normal"
+		1 : "Triggered"
+	] 
+	
+	spawnflags(flags) =
+	[
+		1 :	   "Scout" : 1
+		2 :    "Sniper" : 1
+		4 :    "Soldier" : 1
+		8 :    "Demoman" : 1
+		16 :   "Medic" : 1
+		32 :   "Heavyweapons" : 1
+		64 :   "Pyro" : 1
+		128 :  "Spy" : 1
+		256 :  "Engineer" : 1
+	]
+	
+	TeamNum(choices) : "Team" : 0 : "Team" =
+	[
+		0 : "Any"
+		2 : "Red"
+		3 : "Blue"
+	]
+	input SetTeam(integer) : "Changes the entity's team."
+	
+	round_bluespawn(target_destination) : "Blue spawn for round" : : "Blue spawn point when the associated round is being played."
+	round_redspawn(target_destination) : "Red spawn for round" : : "Red spawn point when the associated round is being played."
+	skin(choices) : "[Hammer] Team Skin" : 0 : "" =
+	[
+		0: "Red"
+		1: "Blue"
+	]
+]
+
+// ICONS ONLY
+
+@PointClass iconsprite("editor/tf_gamerules.vmt") base(Targetname) = tf_gamerules : "Proxy entity for TF Gamerules"
+[	
+	hud_type(choices) : "Hud Type" : 0 : "Override the HUD type clients should display." =
+	[
+		0 : "Default"
+		1 : "CTF HUD"
+		2 : "CP HUD"
+		3 : "Payload HUD"
+	]
+	
+	ctf_overtime(choices) : "CTF Overtime" : 1 : "Allow Overtime for CTF maps." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	ropes_holiday_lights_allowed(choices) : "Holiday Ropes" : 1 : "Allow ropes with holiday lights during the holiday event." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	input SetRedTeamRespawnWaveTime(float) : "Set the RED team's respawn wave time"
+	input SetBlueTeamRespawnWaveTime(float) : "Set the BLU team's respawn wave time"
+	input AddRedTeamRespawnWaveTime(float) : "Add to the RED team's respawn wave time"
+	input AddBlueTeamRespawnWaveTime(float) : "Add to the BLU team's respawn wave time"
+	input SetRedTeamGoalString(string) : "Set the RED team's goal string to show in the hud"
+	input SetBlueTeamGoalString(string) : "Set the BLU team's goal string to show in the hud"
+	input SetRedTeamRole(integer) : "Set RED team role, 0=none, 1=defenders, 2=attackers"
+	input SetBlueTeamRole(integer) : "Set BLU team role, 0=none, 1=defenders, 2=attackers"
+	input SetRequiredObserverTarget(string) : "Sets the given entity (by name) to be the required observer target for all spectators. Must be cleared to allow spectators to cycle through targets normally again."
+	input AddRedTeamScore(integer) : "Add to the RED team score (can be a negative number)"
+	input AddBlueTeamScore(integer) : "Add to the BLU team score (can be a negative number)"
+	input SetStalemateOnTimelimit(bool) : "Determines whether mp_timelimit can end the match in the middle of a round."
+	input SetRedKothClockActive(void) : "Set the RED team clock active for KOTH maps."
+	input SetBlueKothClockActive(void) : "Set the BLU team clock active for KOTH maps."
+	input SetCTFCaptureBonusTime(float) : "Set the length (in seconds) of team crit time for CTF captures. 0 = none"
+	input PlayVORed(string) : "Play the given sound entry via the VO channel" 
+	input PlayVOBlue(string) : "Play the given sound entry via the VO channel"
+	input PlayVO(string) : "Play the given sound entry via the VO channel"
+	input HandleMapEvent(string) : "Handles map events. This will be different events for different maps."
+	input SetCustomUpgradesFile(string) : "Specifies the path relative to the game directory to the upgrades file to be used."
+	input SetRoundRespawnFreezeEnabled(integer) : "Enable/disable the player movement freeze period after a round begins."
+	input SetMapForcedTruceDuringBossFight(bool) : "Enable/disable truce between the teams during a fight with Monoculus or Merasmus."
+	
+	output OnWonByTeam1(void) : "Sent when RED wins the round."
+	output OnWonByTeam2(void) : "Sent when BLUE wins the round."
+	output Team1PlayersChanged(integer) : "Sent when RED team player count changes, due to a player joining or leaving the team."
+	output Team2PlayersChanged(integer) : "Sent when BLUE team player count changes, due to a player joining or leaving the team."
+	output OnPowerupImbalanceTeam1(void) : "Sent when BLUE team has a powerup kill advantage over the RED team. Initiate RED team assist measures now."
+	output OnPowerupImbalanceTeam2(void) : "Sent when RED team has a powerup kill advantage over the BLUE team. Initiate BLUE team assist measures now."
+	output OnPowerupImbalanceMeasuresOver(void) : "Sent when powerup imbalance measures should be stopped"
+	output OnStateEnterBetweenRounds(void) : "Fired when entering the between-rounds state (MvM and Competitive)."
+	output OnStateEnterPreRound(void) : "Fired when entering the pre-round state (just before round running)."
+	output OnStateExitPreRound(void) : "Fired when exiting the pre-round state (just before round running)."
+	output OnStateEnterRoundRunning(void) : "Fired when entering the round-running state."
+	output OnMatchSummaryStart(void) : "Fired when the match summary begins and players are spawned on stage."
+	output OnTruceStart(void) : "Sent when a truce starts."
+	output OnTruceEnd(void) : "Sent when a truce ends."
+]
+
+@PointClass iconsprite("editor/tf_logic_koth.vmt") base(Targetname) = tf_logic_koth : "King of the Hill Entity. This is used to detect a KOTH map."
+[	
+	timer_length(integer) : "Timer length (in seconds)" : 180 : "Initial timer length for each team."
+	unlock_point(integer) : "Unlock Point (in seconds)" : 30 : "Time to wait before unlocking the point in CP KOTH maps."
+
+	input SetRedTimer(integer)	:	"Set the time remaining for the RED timer."
+	input SetBlueTimer(integer)	:	"Set the time remaining for the BLUE timer."
+	input AddRedTimer(integer)	:	"Add time to the RED timer."
+	input AddBlueTimer(integer)	:	"Add time to the BLUE timer."
+]
+
+@PointClass iconsprite("editor/team_train_watcher.vmt") base(Targetname, TeamNum, EnableDisable) = team_train_watcher :
+	"Entity that tracks the train progress through train escort maps"
+[
+	train_can_recede(choices) : "Can the train recede?" : 1 : "Used to hide the HUD countdown." = 
+	[
+		1 : "Yes"
+		0 : "No"
+	]
+	
+	train_recede_time(integer) : "Train recede time (in seconds)" : 0 : "Length of time before the train begins to recede. 0 = use TF2 default setting of 30 seconds."
+	
+	handle_train_movement(choices) : "Handle train movement?" : 0 : "Should the train watcher handle all train movement?" = 
+	[
+		1 : "Yes"
+		0 : "No"
+	]
+	
+	speed_forward_modifier(float) : "Speed Forward Modifier" : 1 : "Applies the given modifier to all forward speeds. Only used if the watcher is handling the train movement. [0, 1]"
+	
+	env_spark_name(string) : "Train spark sprites" : "" : "Name of the env_spark entities used under the train for backward movement. They should all have the same entity name. Only used if the watcher is handling the train movement."
+	
+	train(target_destination) : "Train to watch."
+	start_node(target_destination) : "Node that the path starts at."
+	goal_node(target_destination) : "Node that the path ends at."
+	
+	linked_pathtrack_1(target_destination) : "Linked PathTrack 1"
+	linked_cp_1(target_destination) : "Linked CP 1"
+	
+	linked_pathtrack_2(target_destination) : "Linked PathTrack 2"
+	linked_cp_2(target_destination) : "Linked CP 2"
+	
+	linked_pathtrack_3(target_destination) : "Linked PathTrack 3"
+	linked_cp_3(target_destination) : "Linked CP 3"
+	
+	linked_pathtrack_4(target_destination) : "Linked PathTrack 4"
+	linked_cp_4(target_destination) : "Linked CP 4"
+	
+	linked_pathtrack_5(target_destination) : "Linked PathTrack 5"
+	linked_cp_5(target_destination) : "Linked CP 5"
+	
+	linked_pathtrack_6(target_destination) : "Linked PathTrack 6"
+	linked_cp_6(target_destination) : "Linked CP 6"
+	
+	linked_pathtrack_7(target_destination) : "Linked PathTrack 7"
+	linked_cp_7(target_destination) : "Linked CP 7"
+	
+	linked_pathtrack_8(target_destination) : "Linked PathTrack 8"
+	linked_cp_8(target_destination) : "Linked CP 8"
+		
+	hud_min_speed_level_1(float) : "Min Speed for Speed Level 1" : 30
+	hud_min_speed_level_2(float) : "Min Speed for Speed Level 2" : 60
+	hud_min_speed_level_3(float) : "Min Speed for Speed Level 3" : 90
+	
+	// Inputs
+	input SetNumTrainCappers(integer) : "Set Number of players capping the train"
+	input SetSpeedForwardModifier(float) : "Set the speed forward modifier. Only used if the watcher is handling the train movement. [0, 1]"
+	input SetTrainRecedeTime(integer) : "Set the number of seconds before the train starts to recede."
+	input SetTrainCanRecede(bool) : "Determines whether or not the train can recede."
+	input SetTrainRecedeTimeAndUpdate(integer) : "Set the number of seconds before the train starts to recede and update the current recede time."
+	
+	// Outputs
+	output OnTrainStartRecede(void)   : "Sent when the train should start receding"
+]
