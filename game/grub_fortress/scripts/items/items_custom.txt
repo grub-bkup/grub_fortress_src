@@ -805,6 +805,11 @@ not sure if it should be used as a weapon"
 					"attribute_class"	"mult_cloak_meter_consume_rate"
 					"value"				"1.25"
 				}
+				"NoCloakWhenCloaked"
+				{
+					"attribute_class"	"NoCloakWhenCloaked"
+					"value"	"1"
+				}
 			}
 			"mouse_pressed_sound"	"ui/item_watch_pickup.wav"
 			"drop_sound"			"ui/item_watch_drop.wav"
