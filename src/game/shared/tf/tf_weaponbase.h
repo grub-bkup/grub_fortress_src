@@ -521,6 +521,9 @@ class CTFWeaponBase : public CBaseCombatWeapon, public IHasOwner, public IHasGen
 	virtual bool		IsBroken( void ) const { return false; }
 	virtual void		SetBroken( bool bBroken ) {}
 
+	virtual bool		IsBloody(void) const { return false; }
+	virtual void		SetBloody(bool bBloody) {}
+
 // Server specific.
 #if !defined( CLIENT_DLL )
 

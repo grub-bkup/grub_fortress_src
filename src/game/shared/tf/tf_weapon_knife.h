@@ -44,6 +44,13 @@ public:
 
 	virtual float		GetMeleeDamage( CBaseEntity *pTarget, int* piDamageType, int* piCustomDamage ) OVERRIDE;
 
+	virtual bool		IsBloody( void ) const OVERRIDE { return m_bBloody; }
+	virtual void		SetBloody( bool bBroken ) OVERRIDE;
+
+#ifdef CLIENT_DLL
+	static void RecvProxy_Bloody( const CRecvProxyData *pData, void *pStruct, void *pOut );
+#endif
+
 	virtual void		SendPlayerAnimEvent( CTFPlayer *pPlayer ) OVERRIDE;
 
 	virtual bool		CanDeploy( void ) OVERRIDE;
@@ -73,6 +80,10 @@ public:
 
 	virtual void		WeaponRegenerate( void ) OVERRIDE;
 	virtual void		WeaponReset( void ) OVERRIDE; 
+	virtual bool		DefaultDeploy( char *szViewModel, char *szWeaponModel, int iActivity, char *szAnimExt ) OVERRIDE;
+
+	virtual void		SwitchBodyGroups(void);
+	virtual bool		UpdateBodygroups( CBaseCombatCharacter* pOwner, int iState ) OVERRIDE;
 
 #ifdef GAME_DLL
 	virtual void		ApplyOnInjuredAttributes( CTFPlayer *pVictim, CTFPlayer *pAttacker, const CTakeDamageInfo &info ) OVERRIDE;	// when owner of this weapon is hit
@@ -98,6 +109,8 @@ private:
 	bool m_bWasTaunting;
 
 	CTFKnife( const CTFKnife & ) {}
+protected:
+	CNetworkVar( bool,	m_bBloody  );
 };
 
 inline float CTFKnife::GetProgress( void )
