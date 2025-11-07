@@ -42,7 +42,7 @@
 				"reload time increased"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"	"1.5"
+					"value"				"1.5"
 				}
 			}
 		}
@@ -64,7 +64,7 @@
 		{
 			"static_attrs"
 			{
-				"crit_dmg_falloff"			"delete"
+				"crit_dmg_falloff"						"delete"
 			}
 		}
 		"weapon_axtinguisher" // The Axtinguisher
@@ -167,12 +167,12 @@
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"	"0.90"
+					"value"				"0.90"
 				}
 				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"	"1.25"
+					"value"				"1.25"
 				}
 			}
 		}
@@ -183,7 +183,7 @@
 				"Reload time decreased"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"	"0.85"
+					"value"				"0.85"
 				}
 			}
 		}
@@ -193,12 +193,12 @@
 			{
 				"Reload time decreased"
 				{
-					"value"	"delete"
+					"value"				"delete"
 				}
 				"Reload time decreased"
 				{
 					"attribute_class"	"mult_reload_time"
-					"value"	"0.85"
+					"value"				"0.85"
 				}
 			}
 		}
@@ -246,6 +246,21 @@
 
 			}
 		}
+		"57" // The Razorback
+		{
+			"attributes"
+			{
+				"patient overheal penalty"
+				{
+					"value"				"delete"
+				}
+				"max health additive penalty"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value"				"-25"
+				}
+			}
+		}
 		"133" // The Gunboats
 		{
 			"used_by_classes"
@@ -260,11 +275,9 @@
 			{
 				"damage applies to sappers"
 				{
-					"attribute_class"	"set_dmg_apply_to_sapper"
 					"value"				"delete"
 				}
 				"dmg bonus vs buildings"
-		
 				{
 					"attribute_class"	"mult_dmg_vs_buildings"
 					"value"				"2.5"
@@ -282,27 +295,66 @@
 			{
 				"bleeding duration"
 				{
-					"value" "delete"
+					"value"				"delete"
 				}
 				"bleeding duration"
 				{
 					"attribute_class"	"bleeding_duration"
-					"value" "3"
+					"value"				"3"
 				}
 				"speed_boost_on_hit"
 				{
 					"attribute_class"	"speed_boost_on_hit"
-					"value"	"1.5"
+					"value"				"1.5"
 				}
 				"damage penalty"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"	"0.5"
+					"value"				"0.5"
 				}
 				"single wep deploy time decreased"
 				{
 					"attribute_class"	"mult_single_wep_deploy_time"
-					"value"	"0.75"
+					"value"				"0.75"
+				}
+			}
+		}
+		"230" // Sydney Sleeper
+		{
+			"attributes"
+			{
+				"jarate duration"
+				{
+					"value"				"delete"
+				}
+				"jarate duration"
+				{
+					"attribute_class" "jarate_duration"
+					"value"				"7"
+				}
+				"damage penalty on bodyshot"
+				{
+					"attribute_class"	"bodyshot_damage_modify"
+					"value"				"0.90"
+				}
+			}
+		}
+		"231" // Darwin's Danger Shield
+		{
+			"attributes"
+			{
+				"afterburn immunity"
+				{
+					"value"				"delete"
+				}
+				"dmg taken from fire reduced"
+				{
+					"value"				"delete"
+				}
+				"max health additive bonus"
+				{
+					"attribute_class"	"add_maxhealth"
+					"value"				"25"
 				}
 			}
 		}
@@ -331,43 +383,89 @@
 				}
 			}
 		}
+		"331" // Fists of Steel
+		{
+			"attributes"
+			{
+				"dmg from ranged reduced"
+				{
+					"attribute_class"	"dmg_from_ranged"
+					"value"				"delete"
+				}
+				"dmg taken from blast reduced"
+				{
+					"attribute_class"	"mult_dmgtaken_from_explosions"
+					"value"				"0.8"
+				}
+				"dmg taken from bullets reduced"
+				{
+					"attribute_class"	"mult_dmgtaken_from_bullets"
+					"value"				"0.6"
+				}
+			}
+		}
 		"356" // Conniver's Kunai
 		{
 			"attributes"
 			{
 				"sanguisuge"
 				{
-					"value"	"delete"
+					"value"				"delete"
 				}
 				"max health additive penalty"
 				{
-					"value" "delete"
+					"value"				"delete"
 				}
 				"sanguisuge_nooverheal"
 				{
 					"attribute_class"	"sanguisuge_nooverheal"
-					"value"	"1"
+					"value"				"1"
 				}
 				"max health additive bonus"
 				{
 					"attribute_class"	"add_maxhealth"
-					"value" "+15"
+					"value"				"+15"
 				}
 				"mod_cloak_no_damage_reduction"
 				{
 					"attribute_class"	"mod_cloak_no_damage_reduction"
-					"value" "1"
+					"value"				"1"
 				}
 				"cannot disguise"
 				{
 					"attribute_class"	"set_cannot_disguise"
-					"value" "1"
+					"value"				"1"
 				}
 				"special taunt"
 				{
 					"attribute_class"	"special_taunt"
-					"value" "1"
+					"value"				"1"
 				}
+			}
+		}
+		"449" // The Winger
+		{
+			"used_by_classes"
+			{
+				"scout"					"secondary"
+				"engineer"				"secondary"
+			}
+			"attributes"
+			{
+				"clip size penalty"
+				{
+					"value"				"delete"
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.5"
+				}
+//				"cancel falling damage"
+//				{
+//					"attributes_class"	"cancel_falling_damage"
+//					"value"				"1"
+//				}
 			}
 		}
 		"460" // The Enforcer
@@ -460,6 +558,17 @@
 				}
 			}
 		}
+		"751" // The Cleaner's Carbine
+		{
+			"attributes"
+			{
+				"weapon spread bonus"
+				{
+					"attribute_class" 	"mult_spread_scale"
+					"value"				"0.67"
+				}
+			}
+		}
 		"772" // Baby Face's Blaster
 		{
 			"item_class"	"tf_weapon_scattergun"
@@ -517,6 +626,22 @@
 				}
 			}
 		}
+		"773" // Pretty Boy's Pocket Pistol
+		{
+			"used_by_classes"
+			{
+				"scout"					"secondary"
+				"engineer"				"secondary"
+			}
+			"attributes"
+			{
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.80"
+				}
+			}
+		}
 		"1103" // The Back Scatter
 		{
 			"attributes"
@@ -524,11 +649,11 @@
 				"weapon spread bonus"
 				{
 					"attribute_class" 	"mult_spread_scale"
-					"value" "0.80"
+					"value"				"0.80"
 				}
 				"spread penalty"
 				{
-					"value" "delete"
+					"value"				"delete"
 				}
 			}
 		}
