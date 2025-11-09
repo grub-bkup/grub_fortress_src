@@ -1,0 +1,52 @@
+"items_game"
+{
+	"items"
+	{
+		// New Weapons
+		// PDA: Bi-Directional Teleporters
+		"34000"
+		{
+			"name"						"PDA: Bi-Directional Teleporters"
+			"prefab"					"weapon_pda"
+			"item_name"					"PDA: Bi-Directional Teleporters"
+			"item_quality"				"unique"
+			"moditem" 					"1"
+			"attach_to_hands"			"1"
+			"image_inventory"			"backpack/weapons/w_models/w_builder"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"model_player"				"models/weapons/c_models/c_pda_engineer/c_pda_engineer.mdl"
+			"used_by_classes"
+			{
+				"engineer"	"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"10 0 -10"				
+			}
+			"attributes"
+			{
+				"bidirectional teleport"
+				{
+					"attribute_class"	"bidirectional_teleport"
+					"value"				"1"
+				}
+				"mod teleporter cost"
+				{
+					"attribute_class"	"mod_teleporter_cost"
+					"value"				"2.5"
+				}
+			}
+			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
+			"drop_sound"			"ui/item_metal_weapon_drop.wav"
+			"visuals"
+			{
+				"animation_replacement"
+				{
+					"ACT_VM_IDLE"	"ACT_ENGINEER_PDA1_VM_IDLE"
+					"ACT_VM_DRAW"	"ACT_ENGINEER_PDA1_VM_DRAW"
+				}
+			}
+		}
+	}
+}

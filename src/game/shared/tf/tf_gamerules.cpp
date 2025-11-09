@@ -745,6 +745,11 @@ ConVar mp_spectators_restricted( "mp_spectators_restricted", "0", FCVAR_NONE, "P
 ConVar tf_test_special_ducks( "tf_test_special_ducks", "1", FCVAR_DEVELOPMENTONLY );
 
 ConVar tf_mm_abandoned_players_per_team_max( "tf_mm_abandoned_players_per_team_max", "1", FCVAR_DEVELOPMENTONLY );
+
+// TF:Grub
+
+ConVar tfgrub_can_pickup_buildings("tfgrub_can_pickup_buildings", "1", FCVAR_REPLICATED, "Controls if players can pick up buildings.");
+
 #endif // GAME_DLL
 ConVar tf_mm_next_map_vote_time( "tf_mm_next_map_vote_time", "15", FCVAR_REPLICATED );
 
