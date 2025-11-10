@@ -24,6 +24,7 @@ extern ConVar tf_hud_show_servertimelimit;
 extern ConVar tf_arena_round_time;
 
 void AddSubKeyNamed( KeyValues *pKeys, const char *pszName );
+bool ShouldUseMatchHUD();
 
 DECLARE_BUILD_FACTORY( CTFProgressBar );
 
@@ -620,9 +621,24 @@ void CTFHudTimeStatus::Reset()
 //-----------------------------------------------------------------------------
 void CTFHudTimeStatus::ApplySchemeSettings( IScheme *pScheme )
 {
+	KeyValues *pConditions = NULL;
+
+	if ( TFGameRules() )
+	{
+		if ( ShouldUseMatchHUD() )
+		{
+			pConditions = new KeyValues( "conditions" );
+			AddSubKeyNamed( pConditions, "if_match" );
+		}
+	}
 
 	// load control settings...
-	LoadControlSettings( "resource/UI/HudObjectiveTimePanel.res" );
+	LoadControlSettings( "resource/UI/HudObjectiveTimePanel.res", NULL, NULL, pConditions );
+
+	if ( pConditions )
+	{
+		pConditions->deleteThis();
+	}
 
 	m_pProgressBar = dynamic_cast<CTFProgressBar *>( FindChildByName( "TimePanelProgressBar" ) );
 
@@ -938,6 +954,11 @@ bool CTFHudKothTimeStatus::ShouldDraw()
 void CTFHudKothTimeStatus::SetVisible( bool bVisible )
 {
 	BaseClass::SetVisible( bVisible );
+
+	if ( ShouldUseMatchHUD() )
+	{
+		UpdateActiveTeam();
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -963,7 +984,18 @@ void CTFHudKothTimeStatus::ApplySchemeSettings( IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
 
-	LoadControlSettings( "resource/UI/HudObjectiveKothTimePanel.res", NULL, NULL, NULL );
+	KeyValues *pConditions = NULL;
+
+	if ( TFGameRules() )
+	{
+		if ( ShouldUseMatchHUD() )
+		{
+			pConditions = new KeyValues( "conditions" );
+			AddSubKeyNamed( pConditions, "if_match" );
+		}
+	}
+
+	LoadControlSettings( "resource/UI/HudObjectiveKothTimePanel.res", NULL, NULL, pConditions );
 
 	m_pActiveTimerBG = FindChildByName( "ActiveTimerBG" );
 
@@ -975,7 +1007,12 @@ void CTFHudKothTimeStatus::ApplySchemeSettings( IScheme *pScheme )
 //-----------------------------------------------------------------------------
 void CTFHudKothTimeStatus::UpdateActiveTeam( void )
 {
-	if (m_pActiveTimerBG)
+	if ( ShouldUseMatchHUD() )
+	{
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( m_pRedPanel, m_nActiveTeam == TF_TEAM_RED ? "ActiveTimerHighlight" : "ActiveTimerDim", false );
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( m_pBluePanel, m_nActiveTeam == TF_TEAM_BLUE ? "ActiveTimerHighlight" : "ActiveTimerDim", false );
+	}
+	else if ( m_pActiveTimerBG )
 	{
 		if ( m_nActiveTeam != TEAM_UNASSIGNED )
 		{
