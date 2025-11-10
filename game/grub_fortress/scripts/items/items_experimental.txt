@@ -48,5 +48,81 @@
 				}
 			}
 		}
+		"34001" // Small Man's Clipper
+		{
+			"name"						"The Small Man's Clipper"
+			"prefab"					"weapon_pistol"	
+			"show_in_armory"			"1"
+			"moditem"					"1"
+			"item_type_name"			"#TF_Weapon_PEP_Pistol"
+			"item_name"					"The Small Man's Clipper"
+			"item_quality"				"unique"
+			"image_inventory"			"backpack/workshop/weapons/c_models/c_pep_pistol/c_pep_pistol"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"inspect_panel_dist"		"31"
+			"model_player"				"models/workshop/weapons/c_models/c_pep_pistol/c_pep_pistol.mdl"
+			"used_by_classes"
+			{
+		    	"scout"					"secondary"
+			    "engineer"				"secondary"
+			}		
+			"static_attrs"
+			{
+				"single wep deploy time decreased"		"0.8"
+			}
+			"attributes"
+			{
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value" "0.25"
+				}
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.75"
+				}
+				"Reload time decreased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"	"0.65"
+				}
+			}
+		}
+		"34002" // The Lockwood
+		{
+			"name"						"The Lockwood"
+			"prefab"					"weapon_revolver"
+			"show_in_armory"				"1"
+			"moditem"					"1"
+			"item_type_name"				"#TF_Weapon_Revolver"
+			"item_name"					"The Lockwood"
+			"item_quality"					"unique"
+			"item_description"			"''Let's settle this like gentlemen!''"
+			"attributes"
+			{
+				"damage bonus"
+				{
+					"attribute_class" 	"mult_dmg"
+					"value"			"1.5"
+				}
+				"reload time increased"
+				{
+					"attribute_class" 	"mult_reload_time"
+					"value"			"1.5"
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"			"0.15"
+				}
+				"maxammo secondary reduced"
+				{
+					"attribute_class"	"mult_maxammo_secondary"
+					"value"			"0.5"
+				}
+			}
+		}
 	}
 }
