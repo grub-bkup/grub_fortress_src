@@ -30,7 +30,7 @@
 extern ConVar mp_winlimit;
 extern ConVar mp_tournament_stopwatch;
 
-ConVar tf_use_match_hud( "tf_use_match_hud", "1", FCVAR_ARCHIVE );
+ConVar tf_use_match_hud( "tf_use_match_hud", "0", FCVAR_DEVELOPMENTONLY );
 
 using namespace vgui;
 
@@ -269,7 +269,7 @@ CTFHudMatchStatus::CTFHudMatchStatus(const char *pElementName)
 	: CHudElement(pElementName)
 	, BaseClass(NULL, "HudMatchStatus")
 	, m_pTimePanel( NULL )
-	, m_bUseMatchHUD( false )
+	, m_bUseMatchHUD( ShouldUseMatchHUD() )
 	, m_eMatchGroupSettings( k_eTFMatchGroup_Invalid )
 {
 	Panel *pParent = g_pClientMode->GetViewport();

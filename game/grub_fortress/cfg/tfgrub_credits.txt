@@ -89,7 +89,7 @@ DESCRIPTION INFO_OPTIONS
 	}
 	"tf2gr"
 	{
-		"Team Fortress 2 Goldrush - Removed MYM Hud, And V_Model Support"
+		"Team Fortress 2 Goldrush - V_Model Support"
 		"www.tf2goldrush.com/"
 		{ BOOL }
 		{ "1" }
