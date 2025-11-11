@@ -148,11 +148,11 @@
 		{
 			"name"						"The Shell Grinder"
 			"prefab"					"weapon_shotgun"
-			"show_in_armory"				"1"
+			"show_in_armory"			"1"
 			"moditem"					"1"
-			"item_type_name"				"#TF_Weapon_shotgun"
-			"item_name"					"The"
-			"item_quality"					"unique"
+			"item_type_name"			"#TF_Weapon_shotgun"
+			"item_name"					"The Shell Grinder"
+			"item_quality"				"unique"
 			"used_by_classes"
 			{
 				"soldier"				"secondary"
