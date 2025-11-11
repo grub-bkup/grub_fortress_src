@@ -3392,4 +3392,24 @@
 		"dulltext"		"0"
 		"brighttext"	"1"
 	}
+	"Version_Bottom_Other"
+	{
+		"ControlName"	"Label"
+		"fieldName"		"Version"
+		"font" 			"HudFontMedium"
+		"xpos"			"r130"
+		"ypos"			"r40"
+		"zpos"			"10"
+		"wide"			"600"
+		"tall"			"24"
+		"dulltext"		"1"
+		"autoResize"	"0"
+		"pinCorner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"labelText"		"#TFGRUB_Version_Short_Longer"
+		"textAlignment"	"west"
+		"dulltext"		"0"
+		"brighttext"	"1"
+	}
 }
