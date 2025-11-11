@@ -182,6 +182,16 @@
 					"attribute_class"	"mult_dmg"
 					"value"				"0.8"
 				}
+				"auto fires full clip"
+				{
+					"attribute_class"	"auto_fires_full_clip"
+					"value"	"1"
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.75"
+				}
 			}
 		}
 		// Heal Saw Beta 1
