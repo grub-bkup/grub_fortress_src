@@ -185,7 +185,7 @@
 				"auto fires full clip"
 				{
 					"attribute_class"	"auto_fires_full_clip"
-					"value"	"1"
+					"value"				"1"
 				}
 				"clip size penalty"
 				{
