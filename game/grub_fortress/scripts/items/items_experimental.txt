@@ -267,6 +267,11 @@
 					"attribute_class"	"pda_builds_minidispenser"
 					"value"				"1"
 				}
+				"engineer dispenser build rate multiplier"
+				{
+					"attribute_class"	"dispenser_build_rate_multiplier"
+					"value"		"2.5"
+				}
 			}
 			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
 			"drop_sound"			"ui/item_metal_weapon_drop.wav"
