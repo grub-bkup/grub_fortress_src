@@ -31,6 +31,8 @@
 #define DISPENSER_TRIGGER_MINS			Vector( -70, -70,  0 )
 #define DISPENSER_TRIGGER_MAXS			Vector(  70,  70, 50 )	// tweak me
 
+#define MINI_DISPENSER_SCALE			0.75f
+
 #define REFILL_CONTEXT			"RefillContext"
 #define DISPENSE_CONTEXT		"DispenseContext"
 
@@ -209,9 +211,9 @@ void CObjectDispenser::FirstSpawn()
 
 	bool bShouldBeMini = ShouldBeMiniBuilding( GetOwner() );
 
-	UTIL_SetSize(this,
-		bShouldBeMini ? MINI_DISPENSER_MINS : DISPENSER_MINS,
-		bShouldBeMini ? MINI_DISPENSER_MAXS : DISPENSER_MAXS );
+//	UTIL_SetSize(this,
+//		bShouldBeMini ? MINI_DISPENSER_MINS : DISPENSER_MINS,
+//		bShouldBeMini ? MINI_DISPENSER_MAXS : DISPENSER_MAXS );
 
 	m_takedamage = DAMAGE_YES;
 	m_iAmmoMetal = 0;
@@ -233,7 +235,7 @@ const char* CObjectDispenser::GetBuildingModel( int iLevel )
 		switch ( iLevel )
 		{
 		case 1:
-			return ShouldBeMiniBuilding( GetOwner() ) ? MINI_DISPENSER_MODEL_BUILDING : DISPENSER_MODEL_BUILDING;
+			return DISPENSER_MODEL_BUILDING;
 			break;
 		case 2:
 			return DISPENSER_MODEL_BUILDING_LVL2;
@@ -260,7 +262,7 @@ const char* CObjectDispenser::GetFinishedModel( int iLevel )
 		switch ( iLevel )
 		{
 		case 1:
-			return IsMiniBuilding() ? MINI_DISPENSER_MODEL : DISPENSER_MODEL;
+			return DISPENSER_MODEL;
 			break;
 		case 2:
 			return DISPENSER_MODEL_LVL2;
@@ -280,7 +282,7 @@ const char* CObjectDispenser::GetFinishedModel( int iLevel )
 
 const char* CObjectDispenser::GetPlacementModel()
 {
-	return IsMiniBuilding() ? MINI_DISPENSER_MODEL_PLACEMENT : DISPENSER_MODEL_PLACEMENT;
+	return DISPENSER_MODEL_PLACEMENT;
 }
 
 void CObjectDispenser::StartPlacement( CTFPlayer *pPlayer )
@@ -329,7 +331,8 @@ void CObjectDispenser::MakeMiniBuilding( CTFPlayer* pPlayer )
 	if ( !ShouldBeMiniBuilding( pPlayer ) || IsMiniBuilding() )
 		return;
 
-	BaseClass::MakeMiniBuilding( pPlayer );
+	BaseClass::MakeMiniBuilding(pPlayer);
+	SetModelScale(MINI_DISPENSER_SCALE);
 
 	int iHealth = GetMaxHealthForCurrentLevel();
 
@@ -380,9 +383,9 @@ void CObjectDispenser::SetModel( const char *pModel )
 		bool bShouldBeMini = ShouldBeMiniBuilding(GetOwner());
 
 		// Reset this after model change
-		UTIL_SetSize(this,
-			bShouldBeMini ? MINI_DISPENSER_MINS : DISPENSER_MINS,
-			bShouldBeMini ? MINI_DISPENSER_MAXS : DISPENSER_MAXS);
+//		UTIL_SetSize(this,
+//			bShouldBeMini ? MINI_DISPENSER_MINS : DISPENSER_MINS,
+//			bShouldBeMini ? MINI_DISPENSER_MAXS : DISPENSER_MAXS);
 	ResetSequenceInfo();
 }
 
@@ -518,7 +521,7 @@ void CObjectDispenser::Precache()
 	int iModelIndex;
 
 	PrecacheModel( DISPENSER_MODEL_PLACEMENT );
-	PrecacheModel( MINI_DISPENSER_MODEL_PLACEMENT );
+//	PrecacheModel( MINI_DISPENSER_MODEL_PLACEMENT );
 
 	iModelIndex = PrecacheModel( DISPENSER_MODEL_BUILDING );
 	PrecacheGibsForModel( iModelIndex );
@@ -526,11 +529,11 @@ void CObjectDispenser::Precache()
 	iModelIndex = PrecacheModel( DISPENSER_MODEL );
 	PrecacheGibsForModel( iModelIndex );
 
-	iModelIndex = PrecacheModel( MINI_DISPENSER_MODEL_BUILDING );
-	PrecacheGibsForModel( iModelIndex );
+//	iModelIndex = PrecacheModel( MINI_DISPENSER_MODEL_BUILDING );
+//	PrecacheGibsForModel( iModelIndex );
 
-	iModelIndex = PrecacheModel( MINI_DISPENSER_MODEL );
-	PrecacheGibsForModel( iModelIndex );
+//	iModelIndex = PrecacheModel( MINI_DISPENSER_MODEL );
+//	PrecacheGibsForModel( iModelIndex );
 
 	iModelIndex = PrecacheModel( DISPENSER_MODEL_BUILDING_LVL2 );
 	PrecacheGibsForModel( iModelIndex );

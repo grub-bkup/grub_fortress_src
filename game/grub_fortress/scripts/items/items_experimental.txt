@@ -194,6 +194,128 @@
 				}
 			}
 		}
+		"34004" // Syringe gun prototype
+		{
+			"name"						"Syringe Gun Prototype"
+			"prefab"					"weapon_syringegun"
+			"show_in_armory"			"1"
+			"moditem"					"1"
+			"item_type_name"			"#TF_Weapon_shotgun"
+			"item_name"					"Syringe gun prototype"
+			"item_quality"				"unique"
+			"attributes"
+			{
+				"add uber charge on hit"
+				{
+					"attribute_class"	"add_onhit_ubercharge"
+					"value"	"0.01"
+				}
+				"Projectile speed increased"
+				{
+					"attribute_class"	"mult_projectile_speed"
+					"value"	"1.5"
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.63"
+				}
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.8"
+				}
+			}
+		}
+		"34005" // Sgt. Hell
+		{
+			"name"						"Sgt. Hell"
+			"prefab"					"weapon_shotgun"
+			"show_in_armory"			"1"
+			"moditem"					"1"
+			"item_type_name"			"#TF_Weapon_shotgun"
+			"item_name"					"Sgt. Hell"
+			"item_quality"				"unique"
+			"used_by_classes"
+			{
+				"soldier"				"secondary"
+				"pyro"					"secondary"
+				"heavy"					"secondary"
+				"engineer"				"primary"
+			}	
+			"attributes"
+			{
+				"Set DamageType Ignite"
+				{
+					"attribute_class"	"set_dmgtype_ignite"
+					"value" 			"1"
+				}
+				"damage bonus vs burning"
+				{
+					"attribute_class"	"mult_dmg_vs_burning"
+					"value"				"1.25"
+				}
+				"damage bonus vs burning"
+				{
+					"attribute_class"	"mult_dmg_vs_nonburning"
+					"value"				"0.67"
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.80"
+				}
+				"fire rate penalty"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"1.20"
+				}
+				"reload time increased"
+				{
+					"attribute_class" 	"mult_reload_time"
+					"value"				"1.25"
+				}
+			}
+		}
+		"34006" // PDA: Mini-Dispenser
+		{
+			"name"						"PDA: Mini-Dispenser"
+			"prefab"					"weapon_pda"
+			"item_name"					"PDA: Mini-Dispenser"
+			"item_quality"				"unique"
+			"moditem" 					"1"
+			"attach_to_hands"			"1"
+			"image_inventory"			"backpack/weapons/w_models/w_builder"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"model_player"				"models/weapons/c_models/c_pda_engineer/c_pda_engineer.mdl"
+			"used_by_classes"
+			{
+				"engineer"				"1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"10 0 -10"				
+			}
+			"attributes"
+			{
+				"mod pda builds minidispenser"
+				{
+					"attribute_class"	"pda_builds_minidispenser"
+					"value"				"1"
+				}
+			}
+			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
+			"drop_sound"			"ui/item_metal_weapon_drop.wav"
+			"visuals"
+			{
+				"animation_replacement"
+				{
+					"ACT_VM_IDLE"	"ACT_ENGINEER_PDA1_VM_IDLE"
+					"ACT_VM_DRAW"	"ACT_ENGINEER_PDA1_VM_DRAW"
+				}
+			}
+		}
 		// Heal Saw Beta 1
 		"35000"
 		{
@@ -272,5 +394,113 @@
 				}
 			}
 		}
+		"35002"	// The Under Pressure Beta 1
+		{
+			"name"						"The Under Pressure beta 1"
+			"item_quality"				"unique"
+			"prefab"					"weapon_syringegun"		
+			"item_description"			"(Credits : Haau, Dim)"				
+			"show_in_armory"			"1"	
+			"moditem"					"1"
+			"item_slot"					"primary"
+			"propername"				"1"
+			"item_name"					"TFGRUB_Weapon_UnderPressure"	
+			"item_logname"				"under_pressure"
+			"item_iconname"				"under_pressure"
+			"image_inventory"			"backpack\weapons\c_models\c_underpressure\c_underpressure"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"inspect_panel_dist"		"44"					
+			"model_player"				"models\weapons\c_models\c_underpressure/c_underpressure.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"medic"					"1"
+			}
+			"static_attrs"
+			{
+				"single wep deploy time decreased"		"0.65"
+			}
+			"attributes"	
+			{			
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.5"
+				}			
+				"Reload time decreased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"	"0.65"
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.25"			
+				}			
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.85"			
+				}					
+			}
+			"visuals"
+			{
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"	
+		}
+		"35003"	// The Under Pressure Beta 2
+		{
+			"name"						"The Under Pressure beta 2"
+			"item_quality"				"unique"
+			"prefab"					"weapon_syringegun"		
+			"item_description"			"(Credits : Haau, Dim)"				
+			"show_in_armory"			"1"	
+			"moditem"					"1"
+			"item_slot"					"primary"
+			"propername"				"1"
+			"item_name"					"TFGRUB_Weapon_UnderPressure"	
+			"item_logname"				"under_pressure"
+			"item_iconname"				"under_pressure"
+			"image_inventory"			"backpack\weapons\c_models\c_underpressure\c_underpressure"
+			"image_inventory_size_w"	"128"
+			"image_inventory_size_h"	"82"
+			"inspect_panel_dist"		"44"					
+			"model_player"				"models\weapons\c_models\c_underpressure/c_underpressure.mdl"
+			"attach_to_hands"			"1"
+			"used_by_classes"
+			{
+				"medic"					"1"
+			}
+			"attributes"	
+			{			
+				"fire rate bonus"
+				{
+					"attribute_class"	"mult_postfiredelay"
+					"value"				"0.5"
+				}			
+				"Reload time decreased"
+				{
+					"attribute_class"	"mult_reload_time"
+					"value"	"0.65"
+				}
+				"clip size penalty"
+				{
+					"attribute_class"	"mult_clipsize"
+					"value"				"0.37"			
+				}			
+				"damage penalty"
+				{
+					"attribute_class"	"mult_dmg"
+					"value"				"0.85"			
+				}					
+			}
+			"visuals"
+			{
+			}
+			"mouse_pressed_sound"		"#ui/item_heavy_gun_pickup.wav"
+			"drop_sound"				"#ui/item_heavy_gun_drop.wav"
+		}			
 	}
 }
