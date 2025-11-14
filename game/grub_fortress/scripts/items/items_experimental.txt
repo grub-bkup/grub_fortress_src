@@ -114,28 +114,28 @@
 			"image_inventory_size_w"		"128"
 			"image_inventory_size_h"		"82"
 			"inspect_panel_dist" 			"32"
-			"model_player"	"models/workshop/weapons/c_models/c_snub_nose/c_snub_nose.mdl"
+			"model_player"					"models/workshop/weapons/c_models/c_snub_nose/c_snub_nose.mdl"
 			"attributes"
 			{
 				"damage bonus"
 				{
 					"attribute_class" 	"mult_dmg"
-					"value"			"1.5"
+					"value"				"1.5"
 				}
 				"reload time increased"
 				{
 					"attribute_class" 	"mult_reload_time"
-					"value"			"1.5"
+					"value"				"1.5"
 				}
 				"clip size penalty"
 				{
 					"attribute_class"	"mult_clipsize"
-					"value"			"0.15"
+					"value"				"0.15"
 				}
 				"maxammo secondary reduced"
 				{
 					"attribute_class"	"mult_maxammo_secondary"
-					"value"			"0.5"
+					"value"				"0.5"
 				}
 				"scattergun has knockback"
 				{
@@ -219,24 +219,6 @@
 				{
 					"attribute_class"	"mult_dmg"
 					"value"				"0.8"
-				}
-			}
-		}
-		"34005" // Syringe gun test
-		{
-			"name"						"Syringe Gun Prototype 2"
-			"prefab"					"weapon_syringegun"
-			"show_in_armory"			"1"
-			"moditem"					"1"
-			"item_type_name"			"#TF_Weapon_shotgun"
-			"item_name"					"Syringe Gun Prototype 2"
-			"item_quality"				"unique"
-			"attributes"
-			{
-				"Projectile speed increased"
-				{
-					"attribute_class"	"mult_projectile_speed"
-					"value"				"1.66"
 				}
 			}
 		}

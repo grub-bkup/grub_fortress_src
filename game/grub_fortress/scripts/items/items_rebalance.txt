@@ -212,16 +212,16 @@
 			{
 				"slow enemy on hit"
 				{
-					"value"					"delete"
+					"value"				"delete"
 				}
 				"spunup_damage_resistance"
 				{
-					"value"					"delete"
+					"value"				"delete"
 				}
-				"heal on hit for rapidfire"
+				"heal on kill"
 				{
-					"attribute_class"		"add_onhit_addhealth"
-					"value"					"5"
+					"attribute_class"	"heal_on_kill"
+					"value"				"50"
 				}
 				"reduced_healing_from_medics"
 				{
