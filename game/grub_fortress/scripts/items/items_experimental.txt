@@ -193,6 +193,14 @@
 					"value"				"0.75"
 				}
 			}
+			"visuals_red"
+			{
+				"skin"	"2"
+			}
+			"visuals_blu"
+			{
+				"skin"	"3"
+			}
 		}
 		"34004" // Syringe gun prototype
 		{
