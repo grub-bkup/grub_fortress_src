@@ -952,7 +952,7 @@ void CCaptureFlag::ResetMessage( void )
 		CPASAttenuationFilter filter( this, TF_CTF_FLAGSPAWN );
 		PlaySound( filter, TF_CTF_FLAGSPAWN );
 	}
-	else if ( m_nType == TF_FLAGTYPE_ATTACK_DEFEND )
+	else if ( m_nType == TF_FLAGTYPE_ATTACK_DEFEND || m_nType == TF_FLAGTYPE_BRING_THE_BOMB)
 	{
 		for ( int iTeam = TF_TEAM_RED; iTeam < TF_TEAM_COUNT; ++iTeam )
 		{
@@ -1074,7 +1074,7 @@ void CCaptureFlag::FlagTouch( CBaseEntity *pOther )
 		}
 	}
 
-	if ( ( m_nType == TF_FLAGTYPE_ATTACK_DEFEND || m_nType == TF_FLAGTYPE_TERRITORY_CONTROL ) &&
+	if ( ( m_nType == TF_FLAGTYPE_ATTACK_DEFEND || m_nType == TF_FLAGTYPE_BRING_THE_BOMB || m_nType == TF_FLAGTYPE_TERRITORY_CONTROL ) &&
 		   pOther->GetTeamNumber() != GetTeamNumber() )
 	{
 		return;
@@ -1319,7 +1319,7 @@ void CCaptureFlag::PickUp( CTFPlayer *pPlayer, bool bInvisible )
 			}
 		}
 	}
-	else if ( m_nType == TF_FLAGTYPE_ATTACK_DEFEND )
+	else if ( m_nType == TF_FLAGTYPE_ATTACK_DEFEND || m_nType == TF_FLAGTYPE_BRING_THE_BOMB )
 	{
 		for ( int iTeam = TF_TEAM_RED; iTeam < TF_TEAM_COUNT; ++iTeam )
 		{
@@ -1541,7 +1541,7 @@ void CCaptureFlag::Capture( CTFPlayer *pPlayer, int nCapturePoint )
 
 #ifdef GAME_DLL
 
-	if ( m_nType == TF_FLAGTYPE_CTF )
+	if ( m_nType == TF_FLAGTYPE_CTF || m_nType == TF_FLAGTYPE_BRING_THE_BOMB )
 	{
 		bool bNotify = true;
 
@@ -1614,7 +1614,7 @@ void CCaptureFlag::Capture( CTFPlayer *pPlayer, int nCapturePoint )
 			TFTeamMgr()->AddTeamScore( pPlayer->GetTeamNumber(), TF_CTF_CAPTURED_TEAM_SCORE );
 		}
 	}
-	else if ( m_nType == TF_FLAGTYPE_ATTACK_DEFEND )
+	else if ( m_nType == TF_FLAGTYPE_ATTACK_DEFEND || m_nType == TF_FLAGTYPE_BRING_THE_BOMB )
 	{
 		char szNumber[64];
 		Q_snprintf( szNumber, sizeof(szNumber), "%d", nCapturePoint );
@@ -2043,7 +2043,7 @@ void CCaptureFlag::Drop( CTFPlayer *pPlayer, bool bVisible,  bool bThrown /*= fa
 			}
 		}
 	}
-	else if ( m_nType == TF_FLAGTYPE_ATTACK_DEFEND )
+	else if ( m_nType == TF_FLAGTYPE_ATTACK_DEFEND || m_nType == TF_FLAGTYPE_BRING_THE_BOMB )
 	{
 		if ( bMessage  )
 		{

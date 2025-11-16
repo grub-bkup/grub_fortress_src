@@ -2069,6 +2069,10 @@ CCaptureFlag *CTFBot::GetFlagToFetch( void ) const
 				flagsVector.AddToTail( flag );
 			}
 			break;
+		case TF_FLAGTYPE_BRING_THE_BOMB:
+			// we want to move a flag, any flag
+			flagsVector.AddToTail( flag );
+			break;
 		}
 
 		if ( flag->IsStolen() )

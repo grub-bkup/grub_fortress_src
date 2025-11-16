@@ -1721,17 +1721,21 @@ void CHLClient::LevelInitPreEntity( char const* pMapName )
 
 		char buffer[256];
 		//Change gamemode TEST
-		if(!Q_strnicmp(pMapName,"mvm_",4))
+		if ( !Q_strnicmp(pMapName,"mvm_",4 ) )
 		{
 			discordPresence.state = "Mann Vs. Machine";
 		}
-		else if(!Q_strnicmp(pMapName,"pass_",5))
+		else if ( !Q_strnicmp(pMapName,"pass_",5 ) )
 		{
 			discordPresence.state = "Passtime";
 		}
-		else if(!Q_strnicmp(pMapName,"koth_",5))
+		else if ( !Q_strnicmp(pMapName,"koth_",5 ) )
 		{
 			discordPresence.state = "King of the Hill";
+		}
+		else if ( !Q_strnicmp(pMapName, "btb_", 5 ) )
+		{
+			discordPresence.state = "Bring the Bomb";
 		}
 		else
 			discordPresence.state = "In-Game";

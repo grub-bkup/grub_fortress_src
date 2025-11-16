@@ -19237,6 +19237,10 @@ const char *GetMapType( const char *mapName )
 		{
 			return "#Gametype_Koth";
 		}
+		else if ( !Q_strnicmp( mapName, "btb_", 5 ) )
+		{
+			return "#Gametype_BtB";
+		}
 		else if ( !Q_strnicmp( mapName, "arena_", 6 ) )
 		{
 			return "#Gametype_Arena";

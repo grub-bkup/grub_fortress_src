@@ -816,8 +816,9 @@ void CTFHudFlagObjectives::UpdateStatus( C_BasePlayer *pNewOwner /*= NULL*/, C_B
 		{
 			int nTeam;
 			if ( pPlayerFlag->GetType() == TF_FLAGTYPE_ATTACK_DEFEND || 
-				 pPlayerFlag->GetType() == TF_FLAGTYPE_TERRITORY_CONTROL || 
-				 pPlayerFlag->GetType() == TF_FLAGTYPE_INVADE || 
+				 pPlayerFlag->GetType() == TF_FLAGTYPE_BRING_THE_BOMB ||
+				 pPlayerFlag->GetType() == TF_FLAGTYPE_TERRITORY_CONTROL ||
+				 pPlayerFlag->GetType() == TF_FLAGTYPE_INVADE ||
 				 pPlayerFlag->GetType() == TF_FLAGTYPE_RESOURCE_CONTROL )
 			{
 				nTeam = ( ( GetLocalPlayerTeam() == TF_TEAM_BLUE ) ? ( TF_TEAM_BLUE ) : ( TF_TEAM_RED ) );
