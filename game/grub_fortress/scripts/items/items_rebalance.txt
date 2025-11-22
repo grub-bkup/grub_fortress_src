@@ -53,6 +53,34 @@
 					"medic_backpack"			"1"
 				}
 			}
+//			"visuals_red"
+//			{
+//				"attached_models"
+//				{
+//					"0"
+//					{
+//						"model"	"models/weapons/c_models/c_overhealer/c_overhealer.mdl"
+//					}
+//				}
+//				"custom_particlesystem"
+//				{
+//					"system"	"medicgun_beam_kritzkrieg_red"
+//				}
+//			}
+//			"visuals_blu"
+//			{
+//				"attached_models"
+//				{
+//					"0"
+//					{
+//						"model"	"models/weapons/c_models/c_overhealer/c_overhealer.mdl"
+//					}
+//				}
+//				"custom_particlesystem"
+//				{
+//					"system"	"medicgun_beam_kritzkrieg_red"
+//				}
+//			}
 		}
 		"weapon_crusaders_crossbow" // The Crusader's Crossbow
 		{
