@@ -146,7 +146,7 @@ void CRestartGameIssue::ListIssueDetails( CBasePlayer *pForWhom )
 //-----------------------------------------------------------------------------
 // Purpose: Kick Player Issue
 //-----------------------------------------------------------------------------
-ConVar sv_vote_issue_kick_allowed( "sv_vote_issue_kick_allowed", "0", FCVAR_REPLICATED, "Can players call votes to kick players from the server?" );
+ConVar sv_vote_issue_kick_allowed( "sv_vote_issue_kick_allowed", "1", FCVAR_REPLICATED, "Can players call votes to kick players from the server?" );
 ConVar sv_vote_issue_kick_allowed_mvm( "sv_vote_issue_kick_allowed_mvm", "1", FCVAR_NONE, "Can players call votes to kick players from the server in MvM?" );
 ConVar sv_vote_kick_ban_duration( "sv_vote_kick_ban_duration", "20", FCVAR_NONE, "The number of minutes a vote ban should last. (0 = Disabled)" );
 ConVar sv_vote_issue_kick_min_connect_time_mvm( "sv_vote_issue_kick_min_connect_time_mvm", "300", FCVAR_NONE, "How long a player must be connected before they can be kicked (in seconds)." );
