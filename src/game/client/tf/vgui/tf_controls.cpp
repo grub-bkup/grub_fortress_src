@@ -2985,8 +2985,8 @@ void CTFModCreditsDialog::Deploy(void)
 
 
 #define CREATE_SERVER_DIR "cfg"
-#define DEFAULT_CREATE_SERVER_FILE CREATE_SERVER_DIR "/server_options_default.scr"
-#define CREATE_SERVER_FILE CREATE_SERVER_DIR "/server_options.scr"
+#define DEFAULT_CREATE_SERVER_FILE CREATE_SERVER_DIR "/server_options_default.txt"
+#define CREATE_SERVER_FILE CREATE_SERVER_DIR "/server_options.txt"
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
@@ -3000,19 +3000,6 @@ CTFCreateServerDialog::CTFCreateServerDialog(vgui::Panel* parent) : PropertyDial
 
 	m_pList = NULL;
 
-	m_pPageOne = new vgui::PanelListPanel(this, "PageOne");
-	AddPage( m_pPageOne, "#GameUI_Server" );
-
-	m_pPageTwo = new vgui::PanelListPanel(this, "PageTwo");
-	AddPage( m_pPageTwo, "#Replay_Contest_Rules" );
-
-	m_pPageTwo->SetVisible( false );
-
-	m_pPageThree = new vgui::PanelListPanel(this, "PageThree");
-	AddPage( m_pPageThree, "#GameUI_GameMenu_Options" );
-
-	m_pPageThree->SetVisible( false );
-
 	m_pToolTip = new CTFTextToolTip(this);
 	m_pToolTipEmbeddedPanel = new vgui::EditablePanel(this, "TooltipPanel");
 	m_pToolTipEmbeddedPanel->SetKeyBoardInputEnabled(false);
@@ -3021,13 +3008,62 @@ CTFCreateServerDialog::CTFCreateServerDialog(vgui::Panel* parent) : PropertyDial
 	m_pToolTip->SetTooltipDelay(0);
 
 	m_pDescription = new CInfoDescription();
-	m_pDescription->InitFromFile( DEFAULT_CREATE_SERVER_FILE );
-	m_pDescription->InitFromFile( CREATE_SERVER_FILE, false );
-	//m_pDescription->TransferCurrentValues( NULL ); <- Took an hour away from my life
 
-	// 	MoveToCenterOfScreen();
-	// 	SetSizeable( false );
-	// 	SetDeleteSelfOnClose( true );
+	// If this can be simplified, I'd gladly take it.
+
+	KeyValuesAD pFileKV( "OPTIONS" );
+	if ( !pFileKV->LoadFromFile( g_pFullFileSystem, CREATE_SERVER_FILE, "MOD" ) && !pFileKV->LoadFromFile( g_pFullFileSystem, DEFAULT_CREATE_SERVER_FILE, "MOD" ) )
+		return;
+
+	int i = 0;
+	for ( KeyValues *pCurTab = pFileKV->GetFirstSubKey(); pCurTab; pCurTab = pCurTab->GetNextKey() )
+	{
+		// 1st layer: Tabs
+		const char *pTabName = pCurTab->GetName();
+		m_pPages.AddToTail( new vgui::PanelListPanel(this, pTabName) );
+		AddPage(m_pPages[i], pTabName);
+		DevMsg("Adding page: %s\n", pTabName);
+		for (KeyValues* pCurOption = pCurTab->GetFirstSubKey(); pCurOption; pCurOption = pCurOption->GetNextKey())
+		{
+			// 2nd layer: Options in tab
+			const char *pOptionName = pCurOption->GetName();
+			CScriptObject *pObj = new CScriptObject();
+
+			char type[64];
+			const char *pParamType = pCurOption->GetString( "type" );
+			Q_strncpy( type, pParamType, sizeof( type ) );
+			Q_strncpy( pObj->cvarname, pOptionName, sizeof( pObj->cvarname ) );
+			Q_strncpy( pObj->prompt, pCurOption->GetString( "label", "Unnamed" ), sizeof( pObj->prompt ) );
+			Q_strncpy( pObj->tooltip, pCurOption->GetString( "tooltip" ), sizeof( pObj->tooltip ) );
+			Q_strncpy( pObj->defValue, pCurOption->GetString( "val" ), sizeof( pObj->defValue ) );
+			Q_strncpy( pObj->curValue, pObj->defValue, sizeof( pObj->curValue ) );
+			pObj->fdefValue = atof( pObj->defValue );
+
+			pObj->type = pObj->GetType( type );
+
+			for ( KeyValues *pCurParam = pCurOption->GetFirstSubKey(); pCurParam; pCurParam = pCurParam->GetNextKey() )
+			{
+				const char *pParamName = pCurParam->GetName();
+				if (!V_stricmp(pParamName, "options"))
+				{
+					for ( KeyValues *pCurListItem = pCurParam->GetFirstSubKey(); pCurListItem; pCurListItem = pCurListItem->GetNextKey() )
+					{
+						CScriptListItem *pItem;
+						pItem = new CScriptListItem( pCurListItem->GetName(), pCurListItem->GetString() );
+						pObj->AddItem( pItem );
+					}
+				}
+
+			}
+			pObj->objParent = m_pPages[i];
+			m_pDescription->AddObject( pObj );
+		}
+		i++;
+	}
+
+	// do not init this way as it's harder to get tabs working
+	//m_pDescription->InitFromFile( DEFAULT_CREATE_SERVER_FILE );
+	//m_pDescription->InitFromFile( CREATE_SERVER_FILE, false );
 }
 
 //-----------------------------------------------------------------------------
@@ -3047,9 +3083,13 @@ void CTFCreateServerDialog::ApplySchemeSettings(vgui::IScheme* pScheme)
 
 	CreateControls();
 	LoadControlSettings("resource/ui/TFModServerDialog.res");
-	m_pPageOne->SetFirstColumnWidth(0);
-	m_pPageTwo->SetFirstColumnWidth(0);
-	m_pPageThree->SetFirstColumnWidth(0);
+
+	FOR_EACH_VEC(m_pPages, i)
+	{
+		m_pPages[i]->SetFirstColumnWidth(0);
+		m_pPages[i]->SetVisible( false );
+	}
+	m_pPages[0]->SetVisible( true );
 
 	SetOKButtonVisible(false);
 	SetCancelButtonVisible(false);
@@ -3149,6 +3189,30 @@ void CTFCreateServerDialog::OnCommand(const char* command)
 	BaseClass::OnCommand(command);
 }
 
+const char* GetTypeName( int type ) 
+{
+	switch (type)
+	{
+		case O_BOOL:
+			return "BOOL";
+		case O_NUMBER:
+			return "NUMBER";
+		case O_LIST:
+			return "LIST";
+		case O_STRING:
+			return "STRING";
+		case O_SLIDER:
+			return "SLIDER";
+		case O_CATEGORY:
+			return "CATEGORY";
+		case O_BUTTON:
+			return "BUTTON";
+		default:
+		case O_OBSOLETE:
+			return "OBSOLETE";
+	}
+}
+
 void CTFCreateServerDialog::SaveValues() 
 {
 	// Get the values from the controls:
@@ -3159,16 +3223,88 @@ void CTFCreateServerDialog::SaveValues()
 	{
 		FileHandle_t fp;
 
-		// Add settings to config.cfg
-		//m_pDescription->WriteToConfig();
+		KeyValuesAD pFileKV( "OPTIONS" );
+
+		mpcontrol_t *pList;
+
+		CScriptObject *pObj;
+		CScriptListItem *pItem;
+
+		char szValue[256];
+		char strValue[ 256 ];
+
+		pList = m_pList;
+
+		// This is a mess of sphagetti code, someone please simplify this!
+
+		FOR_EACH_VEC(m_pPages, i)
+		{
+			KeyValues *pTabKV = new KeyValues( m_pPages[i]->GetName() );
+			pTabKV->SetString( "NO OPTIONS", "" );	// Ading this to force the tab to show up
+			pFileKV->AddSubKey( pTabKV );
+		}
+
+		while ( pList )
+		{
+			pObj = pList->pScrObj;
+			Msg( "CVAR: %s LABEL: %s TOOLTIP: %s TYPE: %s VAL: %s PARENT: %s\n", pObj->cvarname, pObj->prompt, pObj->tooltip, GetTypeName(pObj->type), pObj->curValue, pObj->objParent->GetName() );
+
+			// If there's already an entry with this index, overwrite the data.
+			KeyValues *pTabKV = pFileKV->FindKey( pObj->objParent->GetName() );
+			if ( !pTabKV )
+			{
+				pTabKV = new KeyValues( pObj->objParent->GetName() );
+				pFileKV->AddSubKey( pTabKV );
+			}
+
+			KeyValues *pCvarKV = new KeyValues( pObj->cvarname );
+			pCvarKV->SetString( "label", pObj->prompt );
+			pCvarKV->SetString( "tooltip", pObj->tooltip );
+			pCvarKV->SetString( "type", GetTypeName( pObj->type ) );
+			if (pObj->type == O_LIST)
+			{
+				KeyValues *pOptionsKV = new KeyValues( "options" );
+				CScriptListItem *pItem = pObj->pListItems;
+				if ( pItem )
+				{
+					while ( pItem )
+					{
+						pOptionsKV->SetString( pItem->szItemText, pItem->szValue );
+						pItem = pItem->pNext;
+					}
+					pCvarKV->AddSubKey( pOptionsKV );
+				}
+			}
+			pCvarKV->SetString( "val", pObj->curValue );
+			pTabKV->AddSubKey( pCvarKV );
+
+
+			KeyValues *pTempKV = pTabKV->FindKey( "NO OPTIONS" );
+			if( pTempKV )
+			{
+				pTabKV->RemoveSubKey( pTempKV );
+			}
+			pList = pList->next;
+		}
 
 		g_pFullFileSystem->CreateDirHierarchy( CREATE_SERVER_DIR );
 		fp = g_pFullFileSystem->Open( CREATE_SERVER_FILE, "wb" );
 		if ( fp )
 		{
-			m_pDescription->WriteToScriptFile( fp );
+			pFileKV->SaveToFile(g_pFullFileSystem, CREATE_SERVER_FILE);
 			g_pFullFileSystem->Close( fp );
 		}
+
+		// Add settings to config.cfg
+		//m_pDescription->WriteToConfig();
+
+		/*g_pFullFileSystem->CreateDirHierarchy(CREATE_SERVER_DIR);
+		fp = g_pFullFileSystem->Open( CREATE_SERVER_FILE, "wb" );
+		if ( fp )
+		{
+			m_pDescription->WriteToScriptFile( fp );
+			g_pFullFileSystem->Close( fp );
+		}*/
 	}
 }
 
@@ -3317,31 +3453,31 @@ void CTFCreateServerDialog::CreateControls()
 	// Build out the maps dropdown
 	CUtlVector< CUtlString > m_vecMaps;
 	FileFindHandle_t mapHandle;
-	const char* pPopFileName = filesystem->FindFirstEx( "maps/*.bsp", "GAME", &mapHandle );
+	const char* pMapFileName = filesystem->FindFirstEx( "maps/*.bsp", "GAME", &mapHandle );
 
-	while ( pPopFileName && pPopFileName[ 0 ] != '\0' )
+	while ( pMapFileName && pMapFileName[ 0 ] != '\0' )
 	{
 		// Skip it if it's a directory or is the folder info
 		if ( filesystem->FindIsDirectory( mapHandle ) )
 		{
-			pPopFileName = filesystem->FindNext( mapHandle );
+			pMapFileName = filesystem->FindNext( mapHandle );
 			continue;
 		}
 
-		if ( pPopFileName )
+		if ( pMapFileName )
 		{
 			char szShortName[MAX_PATH] = { 0 };
-			V_strncpy( szShortName, pPopFileName, sizeof( szShortName ) );
+			V_strncpy( szShortName, pMapFileName, sizeof( szShortName ) );
 			V_StripExtension( szShortName, szShortName, sizeof( szShortName ) );
 
 			if ( m_vecMaps.Find( szShortName ) == m_vecMaps.InvalidIndex() )
 			{
 				m_vecMaps.AddToTail( szShortName );
-				DevMsg( "Adding Map: '%s' to list\n", szShortName );
+				//DevMsg( "Adding Map: '%s' to list\n", szShortName );
 			}
 		}
 
-		pPopFileName = filesystem->FindNext( mapHandle );
+		pMapFileName = filesystem->FindNext( mapHandle );
 	}
 
 	filesystem->FindClose( mapHandle );
@@ -3352,6 +3488,7 @@ void CTFCreateServerDialog::CreateControls()
 		pMapInfoObj->RemoveAndDeleteAllItems();
 		int iCount = m_vecMaps.Count();
 		pMapInfoObj->AddItem( new CScriptListItem( "#GameUI_RandomMap", "-1" ) );
+		Msg("curvalue: %s\n", pMapInfoObj->curValue);
 		for ( int k = 0; k < iCount; ++ k )
 		{
 			pMapInfoObj->AddItem( new CScriptListItem( m_vecMaps[k], CFmtStr("%i", k)));
@@ -3367,7 +3504,7 @@ void CTFCreateServerDialog::CreateControls()
 	CCvarSlider *pSlider;
 	CScriptListItem *pListItem;
 
-	Panel *objParent = m_pPageOne;
+	//Panel *objParent = m_pPageOne;
 
 	IScheme *pScheme = scheme()->GetIScheme( GetScheme() );
 	vgui::HFont hTextFont = pScheme->GetFont( "HudFontSmallestBold", true );
@@ -3381,7 +3518,10 @@ void CTFCreateServerDialog::CreateControls()
 			continue;
 		}
 
-		pCtrl = new mpcontrol_t( objParent, pObj->cvarname );
+		Panel *objParent = pObj->objParent;
+		PanelListPanel *objParentList = (PanelListPanel *) pObj->objParent;
+
+		pCtrl = new mpcontrol_t( objParent, pObj->cvarname);
 		pCtrl->type = pObj->type;
 
 		// Force it to invalidate scheme now, so we can change color afterwards and have it persist
@@ -3511,7 +3651,7 @@ void CTFCreateServerDialog::CreateControls()
 			}
 		}
 
-		m_pPageOne->AddItem( NULL, pCtrl );
+		objParentList->AddItem( NULL, pCtrl );
 
 		// Link it in
 		if ( !m_pList )
@@ -3623,16 +3763,19 @@ void CTFCreateServerDialog::OnThink()
 					}
 				}
 				//Msg("Current Selection: %s\n", name);
-				const char* szMapImage = CFmtStr("vgui/maps/menu_photos_%s", szMapName);
-
-				IMaterial *pMapMaterial = materials->FindMaterial( szMapImage, TEXTURE_GROUP_VGUI, false );
-				if( pMapMaterial && !IsErrorMaterial( pMapMaterial ) )
+				if( szMapName )
 				{
-					pImagePanel->SetImage(CFmtStr("maps/menu_thumb_%s", szMapName));
-				}
-				else
-				{ 
-					pImagePanel->SetImage(CFmtStr("maps/menu_thumb_default", szMapName));
+					const char* szMapImage = CFmtStr("vgui/maps/menu_thumb_%s", szMapName);
+
+					IMaterial *pMapMaterial = materials->FindMaterial( szMapImage, TEXTURE_GROUP_VGUI, false );
+					if( pMapMaterial && !IsErrorMaterial( pMapMaterial ) )
+					{
+						pImagePanel->SetImage(CFmtStr("maps/menu_thumb_%s", szMapName));
+					}
+					else
+					{ 
+						pImagePanel->SetImage(CFmtStr("maps/menu_thumb_default", szMapName));
+					}
 				}
 			}
 		}

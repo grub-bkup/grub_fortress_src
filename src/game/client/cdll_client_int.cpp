@@ -2662,6 +2662,23 @@ void CHLClient::WriteSaveGameScreenshotOfSize( const char *pFilename, int width,
 	view->WriteSaveGameScreenshotOfSize( pFilename, width, height, bCreatePowerOf2Padded, bWriteVTF );
 }
 
+CON_COMMAND(WriteGameScreenshot, "WriteSaveGameScreenshotOfSize")
+{
+	if (args.ArgC() == 6)
+	{
+		const char *pFilename = args[1];
+		int width = atoi(args[2]);
+		int height = atoi(args[3]);
+		int bCreatePowerOf2Padded = atoi(args[4]);
+		int bWriteVTF = atoi(args[5]);
+		view->WriteSaveGameScreenshotOfSize( pFilename, width, height, !!bCreatePowerOf2Padded, !!bWriteVTF );
+	}
+	else
+	{
+		Msg( "Format: WriteGameScreenshot <filename> <width> <height> <pad> <writevtf>\n" );
+	}
+}
+
 // See RenderViewInfo_t
 void CHLClient::RenderView( const CViewSetup &setup, int nClearFlags, int whatToDraw )
 {

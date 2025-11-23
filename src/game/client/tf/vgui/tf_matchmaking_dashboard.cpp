@@ -917,7 +917,7 @@ void CTFMatchmakingDashboard::OnCreateServer()
 {
 	ClearAllStacks();
 	// Just call the command directly
-	engine->ClientCmd_Unrestricted( "gamemenucommand OpenCreateMultiplayerGameDialog" );
+	engine->ClientCmd_Unrestricted( "modcreateserver" );
 }
 
 void CTFMatchmakingDashboard::OnPlayEvent()

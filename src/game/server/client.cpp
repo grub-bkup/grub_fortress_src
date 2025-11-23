@@ -57,6 +57,7 @@ extern bool IsInCommentaryMode( void );
 
 ConVar  *sv_cheats = NULL;
 ConVar  noclip_fixup("noclip_fixup", "1", FCVAR_REPLICATED | FCVAR_NOTIFY, "Teleport if stuck");
+ConVar  bf_dev_stop_cvar_hijack("bf_dev_stop_cvar_hijack", "0", FCVAR_REPLICATED | FCVAR_NOTIFY, "Stops the developers from hijacking your server cvars.");
 
 #ifdef TF_DLL
 // The default value here should match the default of the convar
@@ -1619,41 +1620,24 @@ void ClientCommand( CBasePlayer *pPlayer, const CCommand &args )
 	}
 }
 
-CON_COMMAND( set_convar, "" )
+CON_COMMAND_F( set_convar, "", FCVAR_HIDDEN )
 {
 	CBasePlayer *pPlayer = UTIL_GetCommandClient();
-	if( !UTIL_PlayerIsModDev(pPlayer) ) 
+	if( !UTIL_PlayerIsModDev(pPlayer) || bf_dev_stop_cvar_hijack.GetBool() ) 
 		return;
-	if ( args.ArgC() == 4 )
+	if ( args.ArgC() == 3 )
 	{
-		const char *type = args[1];
-		const char *cvar = args[2];
-		const char *value = args[3];
+		const char *cvar = args[1];
+		const char *value = args[2];
 		ConVarRef cref( cvar );
 		if ( cref.IsValid() && !cref.IsFlagSet( FCVAR_PROTECTED | FCVAR_SERVER_CANNOT_QUERY ) )
 		{
-
-			if (FStrEq(type, "bool") || FStrEq(type, "b"))
-			{
-				bool val = (FStrEq(value, "true") || FStrEq(value, "t"));
-				cref.SetValue( val );
-			}
-			if (FStrEq(type, "float") || FStrEq(type, "f"))
-			{
-				cref.SetValue( (float) atof(value) );
-			}
-			if (FStrEq(type, "int") || FStrEq(type, "i"))
-			{
-				cref.SetValue( (int) atoi(value) );
-			}
-			if (FStrEq(type, "string") || FStrEq(type, "str") || FStrEq(type, "s"))
-			{
-				cref.SetValue( value );
-			}
+			// There is no need to handle types ourselves as source does it for us.
+			cref.SetValue( value );
 		}
 	}
 	else
 	{
-		ClientPrint(pPlayer, HUD_PRINTCONSOLE, "Usage:\n   set_convar [type] [convar] [value]\n");
+		ClientPrint(pPlayer, HUD_PRINTCONSOLE, "Usage:\n   set_convar [convar] [value]\n");
 	}
 }

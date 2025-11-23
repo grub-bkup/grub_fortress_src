@@ -280,6 +280,7 @@ IMPLEMENT_SERVERCLASS_ST_NOBASE( CBaseEntity, DT_BaseEntity )
 	SendPropInt		(SENDINFO(m_clrRender),	32, SPROP_UNSIGNED),
 	SendPropInt		(SENDINFO(m_iTeamNum),		TEAMNUM_NUM_BITS, 0),
 	SendPropInt		(SENDINFO(m_CollisionGroup), 5, SPROP_UNSIGNED),
+	SendPropFloat	(SENDINFO(m_flGravity)),
 	SendPropFloat	(SENDINFO(m_flElasticity), 0, SPROP_COORD),
 	SendPropFloat	(SENDINFO(m_flShadowCastDistance), 12, SPROP_UNSIGNED ),
 	SendPropEHandle (SENDINFO(m_hOwnerEntity)),
@@ -4755,6 +4756,20 @@ void CBaseEntity::InputKill( inputdata_t &inputdata )
 		SetOwnerEntity( NULL );
 	}
 
+	if ( IsPlayer() )
+	{
+		CBasePlayer *pPlayer = (CBasePlayer *) this;
+		if ( pPlayer->IsBot() )
+		{
+			if ( pPlayer )
+			{
+				pPlayer->Remove();
+				engine->ServerCommand( UTIL_VarArgs( "kickid %d\n", pPlayer->GetUserID() ) );
+			}
+		}
+		return;
+	}
+
 	UTIL_Remove( this );
 }
 
@@ -4773,6 +4788,20 @@ void CBaseEntity::InputKillHierarchy( inputdata_t &inputdata )
 	{
 		pOwner->DeathNotice( this );
 		SetOwnerEntity( NULL );
+	}
+
+	if ( IsPlayer() )
+	{
+		CBasePlayer *pPlayer = (CBasePlayer *) this;
+		if ( pPlayer->IsBot() )
+		{
+			if ( pPlayer )
+			{
+				pPlayer->Remove();
+				engine->ServerCommand( UTIL_VarArgs( "kickid %d\n", pPlayer->GetUserID() ) );
+			}
+		}
+		return;
 	}
 
 	UTIL_Remove( this );
