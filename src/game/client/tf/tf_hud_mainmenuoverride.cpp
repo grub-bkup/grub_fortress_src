@@ -2562,6 +2562,10 @@ void CHudMainMenuOverride::OnCommand(const char* command)
 	{
 		GetClientModeTFNormal()->GameUI()->SendMainMenuCommand("engine openmodcredits");
 	}
+	else if (!Q_stricmp(command, "modcreateserver"))
+	{
+		GetClientModeTFNormal()->GameUI()->SendMainMenuCommand("engine modcreateserver");
+	}
 	else
 	{
 		// Pass it on to GameUI main menu

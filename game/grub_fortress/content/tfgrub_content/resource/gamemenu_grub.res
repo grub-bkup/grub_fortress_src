@@ -24,7 +24,7 @@
 	"PlayPVEButton"
 	{
 		"label" "#GameUI_GameMenu_CreateServer"
-		"command" "OpenCreateMultiplayerGameDialog"
+		"command" "modcreateserver"
 		"subimage" "glyph_create"
 		"OnlyAtMenu" "1"
 	}
@@ -47,7 +47,7 @@
 		"subimage" "glyph_steamworkshop"
 	}
 	
-	// These buttons get positioned by the MainMenuOverride.res	
+	// These buttons get positioned by the MainMenu.res	
 	"CreateServerButton"
 	{
 		"label" "#MMenu_AdvOptions"
@@ -92,5 +92,13 @@
 		"OnlyInGame"	"1"
 		"subimage" "icon_whistle"
 		"tooltip" "#MMenu_RequestCoach"
+	}
+	"LegacyCreateServer"
+	{
+		"label" "#GameUI_GameMenu_CreateServer"
+		"command" "OpenCreateMultiplayerGameDialog"
+		"subimage" "glyph_create"
+		"tooltip"	"Legacy Create Server Menu"
+		"OnlyAtMenu" "1"
 	}
 }

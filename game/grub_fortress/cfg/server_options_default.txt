@@ -12,7 +12,7 @@ OPTIONS
 		{
 			"label"	"#GameUI_ServerName"	// The label that shows up in-game
 			"type"	"STRING"
-			"val"	"Better Fortress 2"
+			"val"	"Grub Fortress"
 		}
 		"sv_tags"
 		{
@@ -29,7 +29,7 @@ OPTIONS
 		{
 			"label"	"#GameUI_MaxPlayers"
 			"type"	"STRING"
-			"val"	"32"
+			"val"	"24"
 		}
 		"tf_bot_quota"
 		{
@@ -91,18 +91,24 @@ OPTIONS
 	{
 		"category1"
 		{
-			"label"	"TEST"
+			"label"	"Gameplay"
 			"type"	"CATEGORY"
 		}
-		"sv_cheats"
+		"tfgrub_lunchbox_owner_can_heal"
 		{
-			"label"	"cheats"
+			"label"	"#TFGRUB_Lunchbox_OwnerPickup"
 			"type"	"BOOL"
 			"val"	"0"
 		}
+		"bf_scout_stunball_old_stun"
+		{
+			"label"	"Old Sandman Stun"
+			"type"	"BOOL"
+			"val"	"1"
+		}
 	}
-	"#GameUI_GameMenu_Options"
-	{
-		
-	}
+//	"#GameUI_GameMenu_Options"
+//	{
+//		
+//	}
 }
